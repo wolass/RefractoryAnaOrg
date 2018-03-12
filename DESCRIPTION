@@ -1,9 +1,11 @@
 Package: RefractoryAnaOrg
-Title: What the Package Does (one line, title case)
+Title: The research compendium for refractory anaphylaxis cases in the European Anaphylaxis Registry
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R: person("Wojciech", "Francuzik", email = "wolass@gmail.com", role = c("aut", "cre"))
+Description: This package provides code, data and analysis for the Refractory anaphylaxis research project. 
 Depends: R (>= 3.4.3)
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+URL: https://github.com/wolass/RefractoryAnaOrg
+BugReports: https://github.com/wolass/RefractoryAnaOrg/issues
