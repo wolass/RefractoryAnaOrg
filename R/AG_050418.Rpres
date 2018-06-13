@@ -1,0 +1,122 @@
+Refractory anaphylaxis cases in the Registry
+========================================================
+author: W. Francuzik
+date: 11.04.2018
+autosize: true
+
+Description
+========================================================
+
+- New data base is not yet incorporated in this analysis
+- we may see more cases with the new database
+
+
+Definition of refractory anaphylaxis
+========================================================
+
+**Theory - ideal definition:**
+
+- at least two doses of adrenaline (of at least 300 µg)
+- without "adequate" clinical response
+
+**Reality - what we can use from the register:**
+
+- at least two doses of adrenaline (dose not availible)
+- AND:
+  - death
+  - severe reaction that required hospitalisation
+
+**Even now we are uncertain that all were refractory**
+
+How many patients with adrenalin doses?
+========================================================
+
+```{r, echo=FALSE}
+require(knitr)
+opts_chunk$set(echo = F)
+require(magrittr)
+load("../analysis/data/derived_data/export.R")
+# load("analysis/data/derived_data/export.R")
+
+export$adrenalinNumber %>% knitr::kable(col.names = c("count"))
+```
+
+
+How severe  (in Ring and Messmer) were the cases where repeated adrenalin was needed
+=============================
+
+```{r}
+export$severityTab %>% knitr::kable()
+```
+
+
+Fatalities in the cases of repeated adrenalin
+=========================
+
+```{r}
+export$refractoryDeathTab %>% knitr::kable()
+```
+
+First part of the definition death and two doses of adrenalin.
+
+
+Which drugs were given as a "second line treatment" in repeated cases of refractory anaphylaxis?
+=======================
+```{r}
+export$drugsRefractory2ndLine %>% knitr::kable()
+```
+
+How many drugs were given in these cases?
+===================
+
+```{r}
+export$Tab2Line %>% t %>% knitr::kable()
+```
+
+And if we only restrict these to grade IV cases?
+============================
+
+top: number of emergency drugs
+
+left: number of adrenalin doses
+
+```{r}
+export$gradeIV2drugs %>% t %>% knitr::kable()
+```
+
+
+Were these patients addmitted to the hospital?
+===========================
+
+```{r}
+export$hospitalTab %>% t %>% knitr::kable()
+```
+
+Second part of the definition: hospital addmission. Some patients that reacted severly and were admitted to the hospital AND recievied 2 and more doses of Adrenalin - had in fact  correct response to adrenalin.
+These cases can not be identified using the data from our register.
+
+
+Result: Age and elicitor description of these refractory cases
+==============================
+
+```{r}
+table(export$casesBrown$d_elicitor_gr5,export$casesBrown$d_age_gr5b) %>% knitr::kable()
+```
+
+Conclusion
+============
+
+- Definition is just a hint that these cases could be refractory
+- manual verification of ceach case would be necessary
+- We know nothing about the sensitivity of this definition
+- Further analysis according to cofactors, symptoms and detailed triggers follows.
+
+```{r}
+require(ggplot2)
+
+ggplot(export$casesBrown,aes(x=d_elicitor_gr5))+
+  geom_histogram(stat = "count")+
+  facet_grid(.~d_age_gr2)+
+  theme_classic()+
+  xlab("Elicitors")
+```
