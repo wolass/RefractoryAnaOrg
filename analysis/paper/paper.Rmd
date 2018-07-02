@@ -1,8 +1,10 @@
 ---
-title: "Refractory anaphylaxis. Data from the European Anaphylaxis Registry"
+title: "Refractory anaphylaxis: Data from the European Anaphylaxis Registry"
 author:
-  - Wojciech Francuzik
-  - Margitta Worm
+  - Wojciech Francuzik*
+  - Sabine Dölle-Bierke*
+  - Franziska Ruëff**
+  - Margitta Worm*
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
     bookdown::word_document2:
@@ -36,7 +38,9 @@ require(magrittr)
 ```
 
 
-Department of Dermatology, Venerology and Allergology, Charité – Universitätsmedizin Berlin, corporate member of Freie Universität Berlin, Humboldt-Universität zu Berlin, and Berlin Institute of Health, Charitéplatz 1, 10117 Berlin,
+*Department of Dermatology, Venerology and Allergology, Charité – Universitätsmedizin Berlin, corporate member of Freie Universität Berlin, Humboldt-Universität zu Berlin, and Berlin Institute of Health, Charitéplatz 1, 10117 Berlin,
+
+**Klinik und Poliklinik für Dermatologie und Allergologie, Frauenlobstraße 9–11, 80337 München
 
 **Corresponding author: **
 Prof. Dr. med. M. Worm margitta.worm@charite.de
@@ -44,39 +48,47 @@ Phone: +49 30 450 529 005;	  Fax: +49 30 450 529 902
 
 
 **Keywords:** 
-anaphylaxis, adrenaline (epinaphrine), Betablockers, Insect venom allergy, Drug allergic reactions
+anaphylaxis, adrenaline (epinaphrine), betablockers, Insect venom allergy, Drug allergic reactions
 
 
 # Abstract: 
 <!-- 350 Words unstructured -->
-Refractory anaphylaxis (unresponsive to treatment with at least 2 doses of minimum 300 mg adrenaline) is a rare and often fatal hypersensitivity reaction. Its definition, prevalence, and risk factors are only vaguely described.  
-Using the data from the European Anaphylaxis Registry (`r v$allCases` cases in total) we were able to identify cases of refractory anaphylaxis (n = `r v$casesR`) and compare them to a control group of severe anaphylaxis cases (n = `r v$casesC`).
-Drugs significantly more frequently elicited refractory anaphylaxis (`r elicitorTab["drugs","percent"]`% of cases) than in other severe anaphylaxis cases (`r elicitorTab["drugs","percANA"]`%).  Cases elicited by insects (n = `r sum(v$casesInsect)`) were more often due to bees in refractory cases (`r elicitExact[4,3]`% vs `r elicitExact[4,2]`%, p = `r elicitExact[4,4]`). The refractory cases occurred more frequently in a perioperative setting (`r v$perioperative[3]`% vs. `r v$perioperative[2]`, p < 0.0001). Intramuscular adrenaline (as a first line therapy) was administered in `r therapyTab[1,3]`% of refractory cases, whereas in `r therapyTab[2,3]`% of cases was given intravenously (significantly more often than in severe anaphylaxis cases: `r therapyTab[2,2]`%, p < 0.0001). Second line treatment options: vasopression with dopamine, methylene blue, glucagon i.v. were not used at all in the treatment of refractory cases. Mortality rate in refractory anaphylaxis was significantly higher (`r v$mortality[3]`%) than in severe cases (`r v$mortality[2]`%, p < 0.0001).
-Although multiple guidelines on anaphylaxis have been published, the clinical adherence to these standards leaves room for improvement. Low use of intramuscular adrenaline as a first line therapy might contribute to refractoriness of an episode. Also, lack of suggested 2nd line medication use in refractory cases indicate that availability of these drug is restricted or anaphylaxis management guidelines may need revision in order to provide algorithms for severe refractory anaphylaxis. 
+Refractory anaphylaxis (unresponsive to treatment with at least 2 doses of minimum 300 mg adrenaline) is a rare and often fatal hypersensitivity reaction. Based on this, definition, its prevalence, and risk factors are only vaguely described.  
+Using the data from the European Anaphylaxis Registry (`r v$allCases` cases in total) we were able to identify cases of refractory anaphylaxis (n = `r v$casesR`) and to analyse these in comparison to a control group of severe anaphylaxis cases (n = `r v$casesC`).
+The data show that drugs more frequently elicited refractory anaphylaxis (`r elicitorTab["drugs","percent"]`% of cases, p < 0.0001) than in other severe anaphylaxis cases (`r elicitorTab["drugs","percANA"]`%).  Cases elicited by insects (n = `r sum(v$casesInsect)`) were more often due to bees in refractory cases (`r elicitExact[4,3]`% vs `r elicitExact[4,2]`%, p = `r elicitExact[4,4]`). The refractory cases occurred more frequently in a perioperative setting (`r v$perioperative[3]`% vs. `r v$perioperative[2]`, p < 0.0001). Intramuscular adrenaline (as a first line therapy) was administered in `r therapyTab[1,3]`% of refractory cases, whereas in `r therapyTab[2,3]`% of cases was given intravenously (significantly more often than in severe anaphylaxis cases: `r therapyTab[2,2]`%, p < 0.0001). Second line treatment options (e.g. vasopression with dopamine, methylene blue, glucagon) were not used at all in the treatment of refractory cases. The mortality rate in refractory anaphylaxis was significantly higher (`r v$mortality[3]`%) than in severe cases (`r v$mortality[2]`%, p < 0.0001).
+Although multiple guidelines on anaphylaxis have been published, the clinical adherence to these standards can be improved. The low use of intramuscular adrenaline as a first line therapy might contribute to refractoriness of an episode. Also, the lack of suggested second line medication use in refractory cases indicate that the availability of these drug is restricted or anaphylaxis management guidelines may need a revision in order to provide clear algorithms for severe refractory anaphylaxis. 
 
+<!--
 # Introduction: 
-The mainstay of Anaphylaxis management is the intramuscular dose of adrenaline, but in the most severe cases of anaphylaxis it might insufficient to restore a stable patient status. 
+The mainstay of anaphylaxis management is the intramuscular dose of adrenaline, but in the most severe cases of anaphylaxis it might insufficient to restore a stable patient status. 
 
-Refractory anaphylaxis (although the established definition is lacking) might be defined as anaphylaxis meeting the criteria by NIAID/FAAN [@Sampson2006] which is unresponsive to the treatment with at least 2 doses of minimum 300 mg adrenaline (lack of expected normalization of clinical symptoms). 
+Refractory anaphylaxis (although the established definition is lacking) might be defined as anaphylaxis meeting the criteria by NIAID/FAAN [@Sampson2006] which is unresponsive to the treatment with at least 2 doses of minimum 300 mg adrenaline without the expected normalization of clinical symptoms. 
 
 # Methods
 We aimed to distinguish the prevalence of refractory anaphylaxis among anaphylaxis cases and factors which may increase the risk of a refractory anaphylaxis episode. 
-Using the Data from the European Anaphylaxis Registry we selected cases where patients received at least two doses of adrenalin, and failed to recover adequately. The flowchart represents the detailed cases selection process. 
+Using the Data from the European Anaphylaxis Registry we selected cases where patients received at least two doses of adrenalin, and failed to recover adequately. The flowchart in figure \@ref(fig:flowchart) represents the detailed cases selection process. 
 
 The final database consisted of `r sum(countries)` cases from `r length(countries)` countries: `r paste0(names(countries),": ",countries,collapse=", ")`.
 
 
 # Results
 
-The European Anaphylaxis Registry contained `r data3[,1] %>% length` cases of anaphylaxis and in `r sum(sumAdre[3:6])` cases at lest 2 doses of adrenalin were administered to the patient. 
+## Demographics
+The European Anaphylaxis Registry contained `r {data3[,"rANA"]=="yes"} %>% which %>% length` cases of refractory anaphylaxis and in `r {data3[,"rANA"]=="no"} %>% which %>% length` cases severe, non-refractory anaphlaxis was diagnosed. The mean age at the reaction was `r {data3$d_age[data3[,"rANA"]=="yes"]} %>% mean(na.rm=T) %>% signif(3)` ± `r data3$d_age[data3[,"rANA"]=="yes"] %>% sd(na.rm=T)` years, and did not differ from severe, non-refractory cases, p = `r t.test(data3$d_age[data3[,"rANA"]=="yes"],data3$d_age[data3[,"rANA"]=="no"])$p.value %>% signif(3)`). There were however significantly more cases of concomitant malignant diseases in the refractory anaphylaxis group. The demographic summary of refractory cases can be found in table \@ref(tab:demoTab).
 
 
-```{r get-data, eval = FALSE}
-# Note the path that we need to use to access our data files when rendering this document
-my_data <- readr::read_csv("../data/raw_data/my_csv_file.csv")
-```
+## Elicitors
+Refractory anaphylaxis was most commonly elicited by drugs (significantly more often than in severe, non-refractory cases), followed by food and insects (table \@ref(tab:elicitorTab)). 
+The most common drugs eliciting anaphylaxis refractory to adrenaline were antibiotics and X-ray contrast medium. Insect-venom refractory cases were significantly more often elicited by bee-stings than severe, non-refractory cases, although the yellow-jacket-stings were most common in other anaphylaxis cases (\@ref(tab:elicitExact)). 
+
+## Therapy
+Adrenaline  iv. as a first-line treatment of anaphylaxis was significantly more often given in refractory cases (`r therapyTab[2,3]`% vs `r therapyTab[2,3]`%). 
+
+
 
 # Discussion
+
+
 
 # Conclusion
 

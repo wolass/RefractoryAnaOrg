@@ -45,6 +45,19 @@ rcalc <- function(var,level="yes"){
   return(c(var,prt[1,1],prt[1,2],p,l))
 }
 
+f1 <- function(x){
+  names(x) <- NULL
+  return(do.call(t.test,x)$p.value %>% signif(3))
+}
+f2 <- function(x){
+  x %>% table(data3$rANA) %>% {.[1:2,]} %>% summary() %>% {.$p.value} %>% signif(3)
+}
+f3 <- function(x){
+  x %>%
+    lapply(function(x){(length(which(x=="yes"))/length(x)*100) %>% signif(3)})
+}
+
+
 ##### VARIABLES #####
 # If you are making new variables than put them here for reference later.
 # It is always good to have all derived data show up early in the script
@@ -493,19 +506,47 @@ v$casesInsect <- table(data3$q_340_insects[data3$rANA=="yes"])
 v$mortality <- rcalc("q_140_fatal")# ** Tables ----
 # This section deals with tables. Prepare them here and reference to them in the paper.Rmd
 
+sdb <- data3[which(data3$rANA=="no"),]
+
 #### 1. Demography ################
 demoTab <- cbind(n = rdb$b_sex %>% summary(),
-                      Age = rdb$d_age %>% split(rdb$b_sex) %>%
+                Age = rdb$d_age %>% split(rdb$b_sex) %>%
                               lapply(.,function(x){mean(x) %>% signif(3)}),
-                      Cardiologic = rdb$q_410_cardio_cur%>% split(rdb$b_sex) %>%
-                              lapply(.,function(x){(length(which(x=="yes"))/length(x)*100) %>% signif(3)}),
-                      DM = rdb$q_410_diab_cur_v6%>% split(rdb$b_sex) %>%
-                              lapply(.,function(x){(length(which(x=="yes"))/length(x)*100) %>% signif(3)}),
-                      `Food allergy` = rdb$q_410_foodallergy_cur_v6%>% split(rdb$b_sex) %>%
-                              lapply(.,function(x){(length(which(x=="yes"))/length(x)*100) %>% signif(3)})
+                Cardiologic = rdb$q_410_cardio_cur%>% split(rdb$b_sex) %>%
+                              f3,
+                DM = rdb$q_410_diab_cur_v6%>% split(rdb$b_sex) %>%
+                              f3,
+                `Food allergy` = rdb$q_410_foodallergy_cur_v6%>% split(rdb$b_sex) %>%
+                              f3,
+                 Mastocytosis = rdb$q_410_masto_cur %>% split(rdb$b_sex) %>% f3,
+                 Malignancy = rdb$q_410_malig_cur %>% split(rdb$b_sex)  %>% f3,
+                `Atopic dermatitis` = rdb$q_410_ad_cur %>% split(rdb$b_sex)  %>% f3
+                )
 
+
+demoTabs <- cbind(n = sdb$b_sex %>% summary(),
+                 Age = sdb$d_age %>% split(sdb$b_sex) %>%
+                   lapply(.,function(x){mean(x) %>% signif(3)}),
+                 Cardiologic = sdb$q_410_cardio_cur%>%  split(sdb$b_sex) %>%f3,
+                 DM = sdb$q_410_diab_cur_v6%>% split(sdb$b_sex) %>% f3,
+                 `Food allergy` = sdb$q_410_foodallergy_cur_v6 %>%  split(sdb$b_sex) %>%f3,
+                 Mastocytosis = sdb$q_410_masto_cur %>% split(sdb$b_sex) %>% f3,
+                 Malignancy = sdb$q_410_malig_cur %>% split(sdb$b_sex)  %>% f3,
+                 `Atopic dermatitis` = sdb$q_410_ad_cur %>% split(sdb$b_sex)  %>% f3
 )
 
+demoTabsP <- cbind(n = data3$b_sex %>% table(data3$rANA) %>% summary() %>% {.$p.value} %>% signif(3),
+                  Age = data3$d_age %>% split(data3$rANA) %>% f1,
+                  Cardiologic = data3$q_410_cardio_cur %>% f2,
+                  DM = data3$q_410_diab_cur_v6 %>% f2,
+                  `Food allergy` = data3$q_410_foodallergy_cur_v6 %>% f2,
+                  Mastocytosis = data3$q_410_masto_cur %>% f2,
+                  Malignancy = data3$q_410_malig_cur %>% f2,
+                  `Atopic dermatitis` = data3$q_410_ad_cur %>% f2
+
+)
+demoTab <- rbind(demoTab,demoTabs,demoTabsP)
+demoTab <- cbind(Group = c("refractory","refractory","severe","severe","p value"),demoTab)
 
 rdb$q_410_masto_cur%>% split(rdb$b_sex) %>% lapply(.,function(x){(length(which(x=="yes"))/length(x)*100) %>% signif(3)})
 rdb$q_410_asthma_cur%>% split(rdb$b_sex) %>% lapply(.,function(x){(length(which(x=="yes"))/length(x)*100) %>% signif(3)})
