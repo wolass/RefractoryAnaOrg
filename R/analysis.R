@@ -50,7 +50,7 @@ f1 <- function(x){
   return(do.call(t.test,x)$p.value %>% signif(3))
 }
 f2 <- function(x){
-  x %>% table(data3$rANA) %>% {.[1:2,]} %>% summary() %>% {.$p.value} %>% signif(3)
+  x %>% table(data3$rANA) %>% {.[1:2,]} %>% fisher.test() %>% {.$p.value} %>% signif(3)
 }
 f3 <- function(x){
   x %>%
@@ -213,8 +213,8 @@ data3 <- data
 # Patient has to get at least 2 doses of adrenalin and the reaction has to be either fatal or
 # refractory anaphylaxis is when you give adrenaline and the patient dies
 # Helpful variables in our case
-data3$q_521_autoinj_v5
-data3$q_521_other_v5 %>% summary
+#"q_521_autoinj_v5" %>% rcalc
+#"q_521_other_v5" %>% rcalc
 data3$q_521_other_free_v5 %>% summary # Mund-zu-Mund-Beatmung, ABC
 data3$q_522_adren_im %>% summary
 data3$q_522_adren_iv %>% summary
@@ -621,6 +621,27 @@ therapyTab <- rbind(
   rcalc("q_562_intensive_care_v6")
 )
 
+therapyTab[,1] <-
+  c("adrenaline im.",
+    "adrenaline iv.",
+    "adrenaline iv., 2nd line",
+    "volume",
+    "volume, 2nd line",
+    "antihistaminics iv.",
+    "antihistaminics iv. 2nd line",
+    "corticosteoids, all routes",
+    "corticosteroids iv.",
+    "corticosteroids iv. 2nd line",
+    "beta-2-mimetics iv.",
+    "beta-2-mimetics inh. 2nd line",
+    "theophyline iv.",
+    "100% oxygen",
+    "dopamine iv.",
+    "glucagon iv.",
+    "methylene blue",
+    "hospital admission",
+    "intensive care")
+
 #### 5. Fatal cases ####
 data3$q_140_fatal %>% table(data3$rANA)
 
@@ -633,9 +654,48 @@ elicitExact <- rbind(
   rcalc("q_340_insects", "yellow jacket")
 )
 
+#### 7. Symptoms tab ####
+sympt.all <- names(data3)[18:70] %>% lapply(rcalc) %>% do.call(what = rbind)
+symptTab <- sympt.all[c(4,6,14,16,18,21,22,24,26,29,30,31),] %>% rbind(rcalc("q_140_fatal"))
+symptTab[,1] <- c("Pruritus",
+                  "Skin symptoms",
+                  "Respiratory symptoms",
+                  "Respiratory arrest",
+                  "Chest tightness",
+                  "Throat tightness",
+                  "Expiratory distress",
+                  "Inspiratory stridor",
+                  "Loss of consciusness",
+                  "Cardiac arrythmia",
+                  "Cardiac arrest",
+                  "Vertigo",
+                  "Death")
+
+# 8. Cofactors tab ####
+cofactorsTab <-  names(data3)[c(185:213,215:232)] %>% lapply(rcalc) %>% do.call(what = rbind)
+cofactorsTabF <- cofactorsTab[c(-1,-2,-3,-4,-5,-7,-9,-11,-13,-16,-17,-19,-20,-21,-22,-23,-24,-25,-26,-27,
+                                -29,-31,-34,-36,-38,-39,-41,-42,-44,-45,-46),]
+cofactorsTabF[,1] <- c(
+                       "Concomitant asthma",
+                       "Concomitant AD",
+                       "Concomitant diabetes",
+                       "Concomitant cardiologic condition",
+                       "Concomitant infection",
+                       "History of malignant disease",
+                       "Concomitant mastocytosis",
+                       "Concomitant other disease - unspecified",
+                       "Exercise prior to reaction",
+                       "Psychological burden",
+                       "Concomitant medication",
+                       "ASA",
+                       "Beta-blockers",
+                       "PPI",
+                       "Other drugs",
+                       "Alcohol use prior to the reaction")
 # ** Figures ----
 library(DiagrammeRsvg)
 require(DiagrammeR)
+
 
 
 # Create a node data frame
