@@ -37,8 +37,8 @@ rcalc <- function(var,level="yes"){
     pp <- tab[2,"yes"]
     l <- levels(data3[,var])[2]
   }
-  nn <- sum(tab[,"no"])-pn
-  np <- sum(tab[,"yes"])-pp
+  nn <- data3$rANA %>% factor %>% summary %>% {.[1]}-pn
+  np <- data3$rANA %>% factor %>% summary %>% {.[2]}-pp
   eval <- c(pn,pp,nn,np) %>% matrix(byrow = T,ncol = 2)
   prt <- (prop.table(eval,2)*100) %>% {signif(.,3)}
   p <- eval %>% fisher.test() %>% .$p.value %>% signif(3)
@@ -649,6 +649,7 @@ data3$q_140_fatal %>% table(data3$rANA)
 elicitExact <- rbind(
   rcalc("d_330_drug_group","antibiotics"),
   rcalc("d_330_drug_group","xray_cm"),
+  rcalc("d_330_drug_group","muscle relaxant"),
   rcalc("d_320_food_group", "legumes"),
   rcalc("q_340_insects", "bee"),
   rcalc("q_340_insects", "yellow jacket")
