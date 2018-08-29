@@ -54,7 +54,7 @@ f2 <- function(x){
 }
 f3 <- function(x){
   x %>%
-    lapply(function(x){(length(which(x=="yes"))/length(x)*100) %>% signif(3)})
+    lapply(function(x){(length(which(x=="yes"))/length(x)*100) %>% round(0)})
 }
 
 
@@ -562,18 +562,16 @@ countries <- rdb$d_centres_country %>% summary() %>% .[{which(.!=0)}]
 
 #rdb[rdb$d_severity_rm=="grade II",]
 
-
-
 #### 2. Elicitor tab ####
 
 elicitorTab <- cbind(n = rdb$d_elicitor_gr5 %>% summary(),
-                     percent = rdb$d_elicitor_gr5 %>% {summary(.)/42*100} %>% signif(3),
-                     percANA = control$d_elicitor_gr5 %>% {summary(.)/length(.)*100} %>% signif(3),
+                     percent = rdb$d_elicitor_gr5 %>% {summary(.)/42*100} %>% round(1),
+                     percANA = control$d_elicitor_gr5 %>% {summary(.)/length(.)*100} %>% round(1),
                      p = c(rcalc("d_elicitor_gr5","food")[4],
                            rcalc("d_elicitor_gr5","drugs")[4],
                            rcalc("d_elicitor_gr5","insects")[4],
                            rcalc("d_elicitor_gr5","other")[4],
-                           rcalc("d_elicitor_gr5","unknown")[4]),
+                           rcalc("d_elicitor_gr5","unknown")[4]) %>% as.numeric(),
                  Age = rdb$d_age %>% split(rdb$d_elicitor_gr5) %>%
                    lapply(.,function(x){mean(x) %>% signif(3)}),
                  Male = rdb$b_sex%>% split(rdb$d_elicitor_gr5) %>%
@@ -622,22 +620,22 @@ therapyTab <- rbind(
 )
 
 therapyTab[,1] <-
-  c("adrenaline im.",
-    "adrenaline iv.",
-    "adrenaline iv., 2nd line",
+  c("adrenaline i.m.",
+    "adrenaline i.v.",
+    "adrenaline i.v. 2nd line",
     "volume",
     "volume, 2nd line",
-    "antihistaminics iv.",
-    "antihistaminics iv. 2nd line",
+    "antihistaminics i.v.",
+    "antihistaminics i.v. 2nd line",
     "corticosteoids, all routes",
-    "corticosteroids iv.",
-    "corticosteroids iv. 2nd line",
-    "beta-2-mimetics iv.",
+    "corticosteroids i.v.",
+    "corticosteroids i.v. 2nd line",
+    "beta-2-mimetics i.v.",
     "beta-2-mimetics inh. 2nd line",
-    "theophyline iv.",
+    "theophyline i.v.",
     "100% oxygen",
-    "dopamine iv.",
-    "glucagon iv.",
+    "dopamine i.v.",
+    "glucagon i.v.",
     "methylene blue",
     "hospital admission",
     "intensive care")
