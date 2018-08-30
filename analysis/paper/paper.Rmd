@@ -162,34 +162,34 @@ Overall, the severity of anaphylaxis and its probable transition into a refracto
 <!-- This theory might explain why younger patients are able to better compensate the same trigger which would elicit a refractory reaction in eldery patients.  -->
 
 ## Symptom compensation
-Age is the most important factor influencing the risk of developing severe anaphylaxis [@Worm2018]. It has been shown that older age may correlate with the decreased abillity to retain homeostasis on strain [@fleg1995].
-Patients who underwent refractory anahpylaxis more often had perioperative reactions  and therefore a decreased ablity to compensate the reaction symptoms. 
+Age is the most important factor influencing the risk of developing severe anaphylaxis [@Worm2018]. It has been shown that older age may correlate with the decreased abillity to retain homeostasis on increased strain [@fleg1995].
+Patients who underwent refractory anahpylaxis more often had perioperative reactions  and therefore a decreased ablity to compensate the reaction symptoms with reflexory renal or cardiopulmonary response [@Rogers2013]. 
 
 ## Elicitors
-Drugs were the most commonly occurring elicitor, what is in concordance with our previous findings [@Francuzik2018]. Multiple medications given in a perioperative setting increase the chance of a hypersensitivity reaction and drug interactions. Perioperative cases of refractoriness have been previously published to be the most common in case series analysis [@Francuzik2018]. Therefore patients who undergo medical procedures and have a history of anaphylaxis should remain under special caution. 
+Drugs were the most commonly occurring elicitor, what is in concordance with our previous findings [@Francuzik2018]. Multiple medications given in a perioperative setting increase the chance of a hypersensitivity reaction and drug interactions [@Ebo2007].  Therefore patients who undergo medical procedures and have a history of anaphylaxis should remain under extraordinary caution. 
 
-Antibiotics, although commonly triggering type IV hypersensitivity reactions, are rarely reported in the literature as the cause of a refractory anaphylaxis. We saw multiple refractory reactions to antibiotics but in clinical practice, these might be overestimated, as patients in a perioperative setting receive multiple drugs along with antibiotics. 
+Antibiotics, although commonly triggering pseudoallergic reactions[@saxon1983], are rarely reported in the literature as the cause of a refractory anaphylaxis. We saw multiple refractory reactions to antibiotics but in clinical practice, these might be overestimated, as patients in a perioperative setting receive multiple drugs along with antibiotics. 
 
-RCM however, commonly elicit hypersensitivity episodes refractory to adrenaline and are responsible for 1-5 deaths per 100,000 administrations  [@Greenberger1991]. RCM was the most frequent elicitor of refractory anaphylaxis.  One of the plausible explanation to this is that RCM promote CARPA and pseudoallergic reactions which might depend on a different mechanism than anaphylaxis [@Wang2011], and therfore the treatment with adrenaline may be less effective in these reactions.
+RCM however, commonly elicit hypersensitivity episodes refractory to adrenaline and are responsible for 1-5 deaths per 100,000 administrations  [@Greenberger1991]. We previously saw RCM to be the most frequent elicitor of refractory anaphylaxis [@Francuzik2018].  One of the plausible explanation to this is that RCM promote complement activation related pseudo allergy (CARPA) [@Wang2011], and therfore the treatment with adrenaline may be less effective in these reactions.
 
-Literature describes many cases of hypersenitivity due to cancer drugs. We saw more cases of refractory anaphylaxis in patient who reported having a malignant disease in the past. Is it possible that the cancer drugs made them more susceptible to refractory anaphylaxis?
+There were also relatively less refractory cases elicited by yellow jacket stings (but not bee-stings). It means that the ratio of yellow jacket to honey bee venom elicited anaphylaxis was inverted in the refractory group. Plausible explanations for this observation might include either longer exposition to the allergen (bee's sting remains in the skin) or the venom volume being 10 times higher than in a wasp sting. Patients should remove the bee sting as quickly as possible (optimal < 2 seconds) [@Visscher1996].
 
-```{r}
-temp <- data3[data3$rANA=="yes",]
-mean_age_malig <- data3$d_age %>% split(data3$q_410_malig_prev_v5 %>% factor) %>% lapply(mean)
-```
-
-It also might be that patients with reported malignancies were simply older (mean age of `r mean_age_malig[[1]]` vs `r mean_age_malig[[2]]` p < ) and therefore less able to compensate the anaphylactic shock. 
-
-There were also relatively less refractory cases elicited by yellow jacket stings (but not bee-stings). The question we could ask here is if chemical properties of bee and yellow jacket venom have various affinities to mast cells? Plausible explanations for this observation, might include either longer exposition to the allergen (longer stings predispose to deeper deposition of the venom and slower metabolizing) or more efficient vasodilation due to biochemical differences between wasp and bee venom. [insekt sting anaphylaxis, Golden, 2007]. In such case - patients might benefit from vasopressive medication [source]. 
-
-Mastoparans are a potent family of mast cell activators through G-protein coupled receptors (GPCRs). It is likely that their affinity to GPCRs might vary and the composition of mastoparans might depend on the species [source].  
+<!-- Mastoparans are a potent family of mast cell activators through G-protein coupled receptors (GPCRs). It is likely that their affinity to GPCRs might vary and the composition of mastoparans might depend on the species [source].   -->
 
 ## Risk factors 
 Although we have previously identified older age and male sex to be associated with more severe anaphylaxis [@Worm2018], these factors seem to be less important when refractory anaphylaxis is considered. Asthma and malignant diseases in the medical history were more frequent in the refractory anaphylaxis group and the reason for this is unclear. It is however interesting that past malignant diseases were mostly recognized in male refractory anaphylaxis patients.
 
-We previously saw that concomitant asthma was rather associated with less severe  anaphylaxis [@Worm2018] but the present analysis indicated concomitant asthma as a risk factor for a refractory episode. Either patients receive already antihistaminic and mast cell blocking agents and their reaction to adrenaline is therefore restricted, or the episode elicits a bronchospasm that is refractory to adrenaline and therefore results in a prolonged anaphylactic episode. This would also clarify why we saw more respiratory distress symptoms in the refractory anaphylaxis cases. 
+Literature describes many cases of hypersenitivity due to cancer drugs, but malignancy in medical history has never been previously associated with severe anaphylaxis. 
+<!-- Is it possible that the cancer drugs made them more susceptible to refractory anaphylaxis? -->
+```{r}
+temp <- data3[data3$rANA=="yes",]
+mean_age_malig <- data3$d_age %>% split(data3$q_410_malig_prev_v5 %>% factor) %>% lapply(mean)
+```
+It might be possible that patients with reported malignancies were simply older (mean age of `r mean_age_malig[[1]]` vs `r mean_age_malig[[2]]` p <
+<!-- `r fisher.test(data3$d_age[which(data3$rANA=="yes")],data3$q_410_malig_prev_v5[which(data3$rANA=="yes")])`  --> 
+0.001) and therefore less able to compensate the anaphylactic shock.
 
+We previously saw that concomitant asthma was rather associated with less severe  anaphylaxis [@Worm2018] but the present analysis indicated concomitant asthma as a risk factor for a refractory episode. Either patients receive already antihistaminic and mast cell blocking agents and their reaction to adrenaline is therefore restricted, or the episode elicits a bronchospasm that is refractory to adrenaline and therefore results in a prolonged anaphylactic episode. This would also clarify why we saw more respiratory distress symptoms in the refractory anaphylaxis cases. 
 
 <!-- We have previously proven the role of ASA in increasing the risk of severe anaphylaxis [@].  Could not find the reference -->
 The role of PPI however has not been identified as a risk factor, and there are only reports on PPI as elicitors of anaphylaxis. 
