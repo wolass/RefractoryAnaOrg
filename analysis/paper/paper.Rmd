@@ -156,9 +156,9 @@ The intensity of physical exercise exceeding the reaction was indifferent betwee
 # Discussion
 
 ## Frequency and patients at risk
-Our findings suggest that around 1 in 100 severe anaphylaxis patients will not respond to the standard therapy with adrenaline, commonly outlined in anaphylaxis management guidelines [@Muraro2014]. Such cases have the highest risk of a fatal outcome, and therefore need to be treated adequately.
+Our findings suggest that around 1 in 100 severe anaphylaxis patients will not respond to the standard therapy with adrenaline, commonly outlined in anaphylaxis management guidelines [@Muraro2014]. Such cases have the highest risk of a fatal outcome, and therefore need to be treated accordingly.
 
-Overall, the severity of anaphylaxis and its probable transition into a refractory episode might be described as in the figure \@ref(fig:theory). Patients who undergo anaphylaxis have four main aspects that influence the severity of a particular episode: 1) compensation - how well is the body able to compensate reaction symptoms e.g. hypotension; 2) elicitors - what was the eliciting agent and duration of the exposition; 3) cofactors - is the presence of other factors which may increase the severity of a given reaction i.e. concomitant use of betablocker etc.; 4) therapy - how fast and accurate the therapeutic procedures were introduced.  
+Overall, the severity of anaphylaxis and its probable transition into a refractory episode might be described as in the figure \@ref(fig:theory). Patients who undergo anaphylaxis have four main aspects that influence the severity of a particular episode: 1) compensation - how well is the body able to compensate reaction symptoms e.g. hypotension; 2) elicitors - what was the eliciting agent and duration of the exposition; 3) cofactors - is the presence of other factors which may increase the severity of a given reaction i.e. concomitant use of betablocker etc.; 4) therapy - how fast and accurately the therapeutic procedures were introduced.  
 <!-- This theory might explain why younger patients are able to better compensate the same trigger which would elicit a refractory reaction in eldery patients.  -->
 
 ## Symptom compensation
@@ -168,13 +168,16 @@ Patients who underwent refractory anahpylaxis more often had perioperative react
 ## Elicitors
 Drugs were the most commonly occurring elicitor, what is in concordance with our previous findings [@Francuzik2018]. Multiple medications given in a perioperative setting increase the chance of a hypersensitivity reaction and drug interactions [@Ebo2007].  Therefore patients who undergo medical procedures and have a history of anaphylaxis should remain under extraordinary caution. 
 
-Antibiotics, although commonly triggering pseudoallergic reactions[@saxon1983], are rarely reported in the literature as the cause of a refractory anaphylaxis. We saw multiple refractory reactions to antibiotics but in clinical practice, these might be overestimated, as patients in a perioperative setting receive multiple drugs along with antibiotics. 
+Antibiotics, although commonly triggering pseudoallergic reactions[@saxon1983], are rarely reported in the literature as the cause of a refractory anaphylaxis. We saw multiple refractory reactions to antibiotics and since literature describes symptomatically identical pseudoallergic drug reactions to anaphylaxis [@Subramanian2016] it would be only possible to identify these patients after investigating their specific mast cell receptors [@Mcneil2015]. 
 
 RCM however, commonly elicit hypersensitivity episodes refractory to adrenaline and are responsible for 1-5 deaths per 100,000 administrations  [@Greenberger1991]. We previously saw RCM to be the most frequent elicitor of refractory anaphylaxis [@Francuzik2018].  One of the plausible explanation to this is that RCM promote complement activation related pseudo allergy (CARPA) [@Wang2011], and therfore the treatment with adrenaline may be less effective in these reactions.
 
-There were also relatively less refractory cases elicited by yellow jacket stings (but not bee-stings). It means that the ratio of yellow jacket to honey bee venom elicited anaphylaxis was inverted in the refractory group. Plausible explanations for this observation might include either longer exposition to the allergen (bee's sting remains in the skin) or the venom volume being 10 times higher than in a wasp sting. Patients should remove the bee sting as quickly as possible (optimal < 2 seconds) [@Visscher1996].
+There were also relatively less refractory cases elicited by yellow-jacket-stings (but not bee-stings). It means that the ratio of yellow jacket to honey bee venom elicited anaphylaxis was inverted in the refractory group. Plausible explanations for this observation might include either longer exposition to the allergen (bee's sting remains in the skin) or the venom volume being 10 times higher than in a wasp sting. Patients should remove the bee sting as quickly as possible (optimal < 2 seconds) [@Visscher1996].
 
 <!-- Mastoparans are a potent family of mast cell activators through G-protein coupled receptors (GPCRs). It is likely that their affinity to GPCRs might vary and the composition of mastoparans might depend on the species [source].   -->
+
+<!-- Carpa ???-->
+Strikingly, the drugs which were most often reported in patients with refractory anaphylaxis usually elicit pseudoallergic reactions (eg. CARPA or MARPA), meaning that a big part of the refractory cases might not be classically associated with a type I hypersensitivity. This could explain why the therapy of anaphylaxis in these patients was refractory. 
 
 ## Risk factors 
 Although we have previously identified older age and male sex to be associated with more severe anaphylaxis [@Worm2018], these factors seem to be less important when refractory anaphylaxis is considered. Asthma and malignant diseases in the medical history were more frequent in the refractory anaphylaxis group and the reason for this is unclear. It is however interesting that past malignant diseases were mostly recognized in male refractory anaphylaxis patients.
@@ -189,35 +192,35 @@ It might be possible that patients with reported malignancies were simply older 
 <!-- `r fisher.test(data3$d_age[which(data3$rANA=="yes")],data3$q_410_malig_prev_v5[which(data3$rANA=="yes")])`  --> 
 0.001) and therefore less able to compensate the anaphylactic shock.
 
-We previously saw that concomitant asthma was rather associated with less severe  anaphylaxis [@Worm2018] but the present analysis indicated concomitant asthma as a risk factor for a refractory episode. Either patients receive already antihistaminic and mast cell blocking agents and their reaction to adrenaline is therefore restricted, or the episode elicits a bronchospasm that is refractory to adrenaline and therefore results in a prolonged anaphylactic episode. This would also clarify why we saw more respiratory distress symptoms in the refractory anaphylaxis cases. 
+We previously saw that concomitant asthma was rather associated with less severe  anaphylaxis [@Worm2018] but the present analyss indicated concomitant asthma as a risk factor for a refractory episode. It is possible that the refractory episode elicits a bronchospasm that is refractory to adrenaline and therefore results in a prolonged anaphylactic episode. This would also clarify why we saw more respiratory distress symptoms in the refractory anaphylaxis cases. 
+
+Psychological stress in temporal proximity to the reaction might increase the severity of the reaction as we previously reported [@Worm2018]. Until now the plausible explanation for this observation is lacking, and its further investigation is warranted.
 
 <!-- We have previously proven the role of ASA in increasing the risk of severe anaphylaxis [@].  Could not find the reference -->
-The role of PPI however has not been identified as a risk factor, and there are only reports on PPI as elicitors of anaphylaxis. 
+The role of PPI as a risk factor for severe anaphylaxis has been indicated in prolonging the exposition to an oral allergen (preventing its degradation due to lower gastric acid production) [@Wlbing2013], and there are reports on PPI as elicitors of anaphylaxis [@Natsch2000]. We saw a significantly higher rate of PPI intake in the refractory anaphylaxis group but its mechanistic contribution to the increase in  severity of an episode or being responsible for its refractoriness cannot be estimated based on this observation. 
 
 <!--Low-Dose Ethanol Alters the Cardiovascular, Metabolic, and Respiratory Compensation for Severe Blood Loss-->
 
 
 ## Therapy 
-<!-- After revising the therapeutic procedures we saw significantly more adrenaline use in the refractory cases, but it could have been used even more extensively in these life-threatening reactions. This observation might indicate that in fact the emergency teams are using these life-saving measures too cautiously.  -->
+<!-- After revising the therapeutic procedures 
+
+We saw significantly more adrenaline use in the refractory cases, but it could have been used even more extensively in these life-threatening reactions. This observation might indicate that in fact the emergency teams are using these life-saving measures too cautiously.  -->
 
 
-Adrenaline i.v. as first-line therapy use was higher in the refractory cases, probably due to most of them happening in a medical setting, however, other second-line therapeutic options were rarely used. 
-
-Methylene blue and vasopressors have been described to successfully restore refractory hypotension, but their actual use in anaphylaxis patients is scarce, although they are mentioned in recognized guidelines on the management of anaphylaxis [@Muraro2014].
+Adrenaline i.v. as first-line therapy use was higher in the refractory cases, probably due to most of them happening in a medical setting, however, other second-line therapeutic options were rarely used. Methylene blue and vasopressors have been described to successfully restore refractory hypotension and recommended by managment guidelines [@Muraro2014], but their actual use in anaphylaxis patients is scarce. Grabenhenrich et al. [@Grabenhenrich2018] recently evaluated the epinephrine use in anaphylaxis patients and concluded that, even in this state of the art drug, large discrepancies between recommenden use and actual treatment practice exist. Therefore, more effort needs to be dedicated to promoting and developing the consensus guidelenes as practically as possiblle in order to increasing adherence. 
 
 ## Limitations and strength
 Low number of refractory cases prevented us from analyzing the data with more advanced statistical models, however, our analysis is the first published report on over 30 refractory anaphylaxis cases.
 
 Definition  of refractory anaphylaxis is not universal, and confirming the refractory anaphylaxis based on the answers to our online questionnaire poses additional difficulties.
-If fatal reaction occurs before the second dose of adrenaline could be administered to the patient - it cannot be diagnosed as refractory (as we defined at least two doses of minimum 300 µg adrenaline) although it as well could be refractory. 
+If a fatal reaction occurs before the second dose of adrenaline could be administered to the patient - it cannot be diagnosed as refractory (as we defined at least two doses of minimum 300 µg adrenaline) although it as well could be refractory. 
 
 Comparison of refractory anaphylaxis to patients with severe anaphylaxis gave us the possibility to describe which patients have a higher risk of developing a refractory episode, however we can not answer the question which patients have the higher risk of developing anaphylaxis per se. 
 
 ## Conclusion
 
-Refractory anaphylaxis is a rare form of life-threatening hypersensitivity reaction with high mortality. We propose to increase the use of second line medication such as methylene blue, vasopressin and glucagon
-in cases where 2 doses of adrenaline did not result in rapid normalization of anaphylaxis symptoms. 
-
+Refractory anaphylaxis is a rare form of life-threatening hypersensitivity reaction with high mortality. Its elicitors and cofactors differ from other anaphylaxis cases, and the managment of refractory anaphylaxis needs to improve. We propose to increase the use of second line medication such as methylene blue, vasopressin and (in suspicion of a beta adrenergic blockade) glucagon in cases where 2 doses of adrenaline did not result in a rapid normalization of anaphylaxis symptoms. 
 
 # Acknowledgements
 We thank the members of The European Anaphylaxis Registry.
