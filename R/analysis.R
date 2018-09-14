@@ -509,6 +509,8 @@ v$mortality <- rcalc("q_140_fatal")# ** Tables ----
 sdb <- data3[which(data3$rANA=="no"),]
 
 #### 1. Demography ################
+
+
 demoTab <- cbind(n = rdb$b_sex %>% summary(),
                 Age = rdb$d_age %>% split(rdb$b_sex) %>%
                               lapply(.,function(x){mean(x) %>% signif(3)}),
@@ -520,7 +522,8 @@ demoTab <- cbind(n = rdb$b_sex %>% summary(),
                               f3,
                  Mastocytosis = rdb$q_410_masto_cur %>% split(rdb$b_sex) %>% f3,
                  Malignancy = rdb$q_410_malig_cur %>% split(rdb$b_sex)  %>% f3,
-                `Atopic dermatitis` = rdb$q_410_ad_cur %>% split(rdb$b_sex)  %>% f3
+                `Atopic dermatitis` = rdb$q_410_ad_cur %>% split(rdb$b_sex)  %>% f3,
+                `tryptase [median]` = rdb$q_212_tryptase_value_v5 %>% split(rdb$b_sex) %>% lapply(median,na.rm=T)
                 )
 
 
@@ -532,7 +535,8 @@ demoTabs <- cbind(n = sdb$b_sex %>% summary(),
                  `Food allergy` = sdb$q_410_foodallergy_cur_v6 %>%  split(sdb$b_sex) %>%f3,
                  Mastocytosis = sdb$q_410_masto_cur %>% split(sdb$b_sex) %>% f3,
                  Malignancy = sdb$q_410_malig_cur %>% split(sdb$b_sex)  %>% f3,
-                 `Atopic dermatitis` = sdb$q_410_ad_cur %>% split(sdb$b_sex)  %>% f3
+                 `Atopic dermatitis` = sdb$q_410_ad_cur %>% split(sdb$b_sex)  %>% f3,
+                 `tryptase [median]` = sdb$q_212_tryptase_value_v5 %>% split(sdb$b_sex) %>% lapply(median,na.rm=T)
 )
 
 demoTabsP <- cbind(n = data3$b_sex %>% table(data3$rANA) %>% summary() %>% {.$p.value} %>% signif(3),
@@ -542,7 +546,9 @@ demoTabsP <- cbind(n = data3$b_sex %>% table(data3$rANA) %>% summary() %>% {.$p.
                   `Food allergy` = data3$q_410_foodallergy_cur_v6 %>% f2,
                   Mastocytosis = data3$q_410_masto_cur %>% f2,
                   Malignancy = data3$q_410_malig_cur %>% f2,
-                  `Atopic dermatitis` = data3$q_410_ad_cur %>% f2
+                  `Atopic dermatitis` = data3$q_410_ad_cur %>% f2,
+                  `tryptase [mean]` = data3$q_212_tryptase_value_v5[data3$rANA=="no"] %>%
+                    wilcox.test(data3$q_212_tryptase_value_v5[data3$rANA=="yes"]) %>% {.$p.value}
 
 )
 demoTab <- rbind(demoTab,demoTabs,demoTabsP)
@@ -561,6 +567,13 @@ rdb$q_410_malig_cur%>% split(rdb$b_sex) %>% lapply(.,function(x){(length(which(x
 countries <- rdb$d_centres_country %>% summary() %>% .[{which(.!=0)}]
 
 #rdb[rdb$d_severity_rm=="grade II",]
+
+
+# Visualize the tryptase calues
+ggplot(data3[!is.na(data3$rANA),],aes(q_212_tryptase_value_v5,color=rANA))+
+  geom_density()+
+  xlim(0,25)
+
 
 #### 2. Elicitor tab ####
 
