@@ -253,7 +253,7 @@ knitr::include_graphics("../figures/flow.png")
 
 ```{r theory, fig.cap="Visual representation of the three forces determining the severity of anaphylaxis. The natural ability of the body to compensate the anaphylaxis symptoms and therapeutic measures acting to restore homeostasis to a patient by whom elicitors and cofactors influence synergistically the severity of a given episode."}
 
-knitr::include_graphics("../figures/diag.png")
+knitr::include_graphics("../figures/diag2.png")
 ```
 
 
@@ -262,7 +262,10 @@ knitr::include_graphics("../figures/diag.png")
 # Tables
 
 ```{r demoTab}
-knitr::kable(demoTab, caption = "Summary of the refractory anaphylaxis cases. Age is represented by a mean value, other as fractions [%]. DM - diabetes mellitus")
+knitr::kable(demoTab, caption = "Summary of the refractory anaphylaxis cases. Age is represented by a mean value, other variables as fractions [%]. DM - diabetes mellitus, p value is derived from a Mann-Whitney U test or a Chi^2^ test for interval and categorical variables respectively.",
+             digits = 2,
+             align = rep("r",10),
+             nsmall=2)
 ```
 
 ##### 
@@ -271,8 +274,14 @@ knitr::kable(demoTab, caption = "Summary of the refractory anaphylaxis cases. Ag
 
 ```{r elicitorTab}
 knitr::kable(elicitorTab, caption = "Summary of elicitors in the refractory anaphylaxis cases and severe, non-refractory anaphylaxis cases as a control. ANA - anaphylaxis, p-value derived from the Fisher exact test.",
-             col.names = c("n","refractory ANA [%]","severe ANA [%]","p value","Age","Male sex [%]","Perioperative [%]","Food allergy [%]"),
-             digits = 1)
+             col.names = c("n","refractory ANA [%]","severe ANA [%]","p value","Age","Male sex [%]","Perioperative [%]","Food allergy [%]")
+            #digits = 1,
+             # align = rep("r",10),
+             # trim=T,
+             # scientific=F,
+             # nsmall=3,
+             #drop0trailing = F
+             )
 ```
 
 ##### 

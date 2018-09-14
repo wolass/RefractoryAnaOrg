@@ -41,20 +41,26 @@ rcalc <- function(var,level="yes"){
   np <- data3$rANA %>% factor %>% summary %>% {.[2]}-pp
   eval <- c(pn,pp,nn,np) %>% matrix(byrow = T,ncol = 2)
   prt <- (prop.table(eval,2)*100) %>% {signif(.,3)}
-  p <- eval %>% fisher.test() %>% .$p.value %>% signif(3)
+  p <- eval %>% fisher.test() %>% .$p.value %>% roP
   return(c(var,prt[1,1],prt[1,2],p,l))
+}
+
+roP<- function(x){
+  ifelse(x > 0.001,
+  round(x,3),ifelse(x==0,0,0.0001)
+  )
 }
 
 f1 <- function(x){
   names(x) <- NULL
-  return(do.call(t.test,x)$p.value %>% signif(3))
+  return(do.call(t.test,x)$p.value %>% roP)
 }
 f2 <- function(x){
-  x %>% table(data3$rANA) %>% {.[1:2,]} %>% fisher.test() %>% {.$p.value} %>% signif(3)
+  x %>% table(data3$rANA) %>% {.[1:2,]} %>% fisher.test() %>% {.$p.value} %>% roP
 }
 f3 <- function(x){
   x %>%
-    lapply(function(x){(length(which(x=="yes"))/length(x)*100) %>% round(0)})
+    lapply(function(x){(length(which(x=="yes"))/length(x)*100) %>% roP})
 }
 
 
@@ -548,9 +554,10 @@ demoTabsP <- cbind(n = data3$b_sex %>% table(data3$rANA) %>% summary() %>% {.$p.
                   Malignancy = data3$q_410_malig_cur %>% f2,
                   `Atopic dermatitis` = data3$q_410_ad_cur %>% f2,
                   `tryptase [mean]` = data3$q_212_tryptase_value_v5[data3$rANA=="no"] %>%
-                    wilcox.test(data3$q_212_tryptase_value_v5[data3$rANA=="yes"]) %>% {.$p.value}
+                    wilcox.test(data3$q_212_tryptase_value_v5[data3$rANA=="yes"]) %>% {.$p.value} %>% round(3)
 
 )
+
 demoTab <- rbind(demoTab,demoTabs,demoTabsP)
 demoTab <- cbind(Group = c("refractory","refractory","severe","severe","p value"),demoTab)
 
@@ -576,7 +583,6 @@ ggplot(data3[!is.na(data3$rANA),],aes(q_212_tryptase_value_v5,color=rANA))+
 
 
 #### 2. Elicitor tab ####
-
 elicitorTab <- cbind(n = rdb$d_elicitor_gr5 %>% summary(),
                      percent = rdb$d_elicitor_gr5 %>% {summary(.)/42*100} %>% round(1),
                      percANA = control$d_elicitor_gr5 %>% {summary(.)/length(.)*100} %>% round(1),
