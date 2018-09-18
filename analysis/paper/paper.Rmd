@@ -143,7 +143,7 @@ Second line medication like dopamine, glucagon and methylene blue were not given
 <!-- ## Cofactors -->
 Patients with refractory anaphylaxis more often had concomitant asthma and malignant diseases in medical history. Also other unspecified concomitant conditions were significantly more often reported in refractory cases. It is worth noticing that concomitant cardiologic conditions, diabetes and mastocytosis were similarly frequent in both groups.  
 
-Patients with refractory anaphylaxis more often reported concomitant proton pump inhibitors (PPI) and acetylsalicilic acid (ASA) use compared to patients with severe non-refractory anaphylaxis. Other (not specified) medications were also more frequent in refractory cases. 
+Patients with refractory anaphylaxis more often reported concomitant proton pump inhibitors (PPI) and acetylsalicilic acid (ASA) use compared to patients with severe non-refractory anaphylaxis. Other (not specified) medications were also more frequent in refractory cases. In `r table(data3$rANA,data3$q_423_beta)[2,2]` cases of refractory anaphylaxis (`r (table(data3$rANA,data3$q_423_beta)[2,2]/sum(table(data3$rANA,data3$q_423_beta)[2,1:3])*100) %>% round(1)`%) patients reported receiving beta-blockers as a concomitant medication, but none of these patients recieved a glucagon infusion.
 
 The intensity of physical exercise exceeding the reaction was indifferent between groups, however the psychological burden was reported 3 times more frequently in refractory cases (see table \@ref(tab:cofactorsTab)).
 
@@ -217,12 +217,13 @@ Adrenaline i.v. as first-line therapy use was high in the refractory cases. This
 
 Methylene blue and vasopressors have been described to successfully restore refractory hypotension and recommended by managment guidelines [@Muraro2014], but their actual use in anaphylaxis patients is scarce. There are multiple reports of successful methylene blue use in refractory anaphylaxis [@Francuzik2018]. Evora [@Evora2000] reported 6 cases of refractory, peroperative anaphylaxis (to RCM and penicillin) which responded to methylene blue i.v. within minutes. Its mode of action is by blocking the guanylate cyclase and therefore preventing further nitric-oxide-dependent vasodilation in a distributive shock [@dfaz]. 
   
+Suprisingly, even though multiple anaphylaxis management guidelines recommend glucagon infusions in cases of concomitant beta-blocker therapy in anaphylactic patients [@Simons2011;@Lieberman;@Muraro2014], it has not been administered in any of the severe or refractory cases. Glucagon has been reported to sucessfully relive refractory anaphylaxis [@Zaloga1986;@Javeed1996] by directly activating the adenylyl cyclase and therefore bypassing the \beta-adrenergic receptor blockade [@Zaloga1986].   
 
 ## Limitations and strengths
 The low number of refractory cases prevented us from analyzing the data with more advanced statistical models. However, our analysis is the first published report on a patient sample containing over 30 refractory anaphylaxis cases.
 
 Definition  of refractory anaphylaxis is not universal. Also in this study, the confirmation of a refractory anaphylaxis based on the answers to our online questionnaire posed difficulties.
-If a fatal reaction occured before the second dose of adrenaline was administered to the patient - it could not be diagnosed as refractory (as we defined at least two doses of minimum 300 µg adrenaline) although it in fact could have been refractory. 
+If a fatal reaction occured before the second dose of adrenaline was administered to the patient - it could not be diagnosed as refractory (as we defined at least two doses of minimum 300 µg adrenaline for refractory anaphylaxis) although it in fact could have been refractory. 
 
 Comparison of refractory anaphylaxis with patients suffering from severe anaphylaxis enabled us to distinguish patients with a higher risk of developing a refractory episode. However we cannot address the question which patients had a higher risk of experiencing anaphylaxis per se. 
 
