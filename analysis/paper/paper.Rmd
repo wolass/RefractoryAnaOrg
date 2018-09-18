@@ -58,17 +58,16 @@ anaphylaxis, adrenaline (epinephrine), beta-blockers, insect venom allergy, drug
 
 # Abstract
 <!-- 350 Words unstructured -->
-Refractory anaphylaxis (unresponsive to treatment with at least 2 doses of minimum 300 mg adrenaline) is a rare and often fatal hypersensitivity reaction. Comprehensive data on its definition, prevalence, and risk factors are missing.  
-Using the data from the European Anaphylaxis Registry (`r v$allCases` cases in total) we identified refractory anaphylaxis cases (n = `r v$casesR`) and analysed these in comparison to a control group of severe anaphylaxis cases (n = `r v$casesC`).
+Refractory anaphylaxis (unresponsive to treatment with at least 2 doses of minimum 300 µg adrenaline) is a rare and often fatal hypersensitivity reaction. Comprehensive data on its definition, prevalence, and risk factors are missing. Using the data from the European Anaphylaxis Registry (`r v$allCases` cases in total) we identified refractory anaphylaxis cases (n = `r v$casesR`) and analysed these in comparison to a control group of severe anaphylaxis cases (n = `r v$casesC`).
 
-The data show that drugs more frequently elicited refractory anaphylaxis (`r elicitorTab["drugs","percent"]`% of cases, p < 0.0001) than in other severe anaphylaxis cases (`r elicitorTab["drugs","percANA"]`%).  Cases elicited by insects (n = `r sum(v$casesInsect)`) were more often due to bees in refractory cases (`r elicitExact[4,3]`% vs `r elicitExact[4,2]`%, p = `r elicitExact[4,4]`). The refractory cases occurred more frequently in a perioperative setting (`r v$perioperative[3]`% vs. `r v$perioperative[2]`, p < 0.0001). Intramuscular adrenaline (as a first line therapy) was administered in `r therapyTab[1,3]`% of refractory cases, whereas in `r therapyTab[2,3]`% of cases it was applied intravenously (significantly more often than in severe anaphylaxis cases: `r therapyTab[2,2]`%, p < 0.0001). Second line treatment options (e.g. vasopression with dopamine, methylene blue, glucagon) were not used at all in the treatment of refractory cases. The mortality rate in refractory anaphylaxis was significantly higher (`r v$mortality[3]`%) than in severe cases (`r v$mortality[2]`%, p < 0.0001).
+The data show that drugs more frequently elicited refractory anaphylaxis (`r elicitorTab["drugs","percent"]`% of cases, p < 0.0001) than in other severe anaphylaxis cases (`r elicitorTab["drugs","percANA"]`%).  Cases elicited by insects (n = `r sum(v$casesInsect)`) were more often due to bees in refractory cases (`r 5/8*100`% vs `r round(449/(77+1607+4+9+170+3+449)*100,1)`%, p = `r fisher.test(matrix(c(449,5,77+1607+4+9+170+3,3),nrow=2))$p.value %>% round(3)`). The refractory cases occurred more frequently in a perioperative setting (`r v$perioperative[3]`% vs. `r v$perioperative[2]`, p < 0.0001). Intramuscular adrenaline (as a first line therapy) was administered in `r therapyTab[1,3]`% of refractory cases, whereas in `r therapyTab[2,3]`% of cases it was applied intravenously (significantly more often than in severe anaphylaxis cases: `r therapyTab[2,2]`%, p < 0.0001). Second line treatment options (e.g. vasopression with dopamine, methylene blue, glucagon) were not used at all in the treatment of refractory cases. The mortality rate in refractory anaphylaxis was significantly higher (`r v$mortality[3]`%) than in severe cases (`r v$mortality[2]`%, p < 0.0001).
 
-Although multiple guidelines on anaphylaxis have been published, the clinical adherence to these guidelines can be improved. The lack of second line medication (i.e. methylene blue or dopamine) use in refractory cases has to be addressed in future efforts to improve the managment (and guidelines adherence) of severe refractory anaphylaxis cases. 
+Although multiple guidelines on anaphylaxis have been published, the clinical adherence to these guidelines can be improved. The neglegence of second line medication (i.e. methylene blue or dopamine) in refractory cases has to be addressed in future efforts to improve the managment (and guidelines adherence) of severe refractory anaphylaxis cases. 
 
 
 # Introduction
 
-Anaphylaxis is a non-homogeneous clinical diagnosis, depending on various triggering and augmenting factors [@Simons2015]. This variability introduces a wide range of possible reaction-symptom severities. Therefore multiple sub-types of anaphylaxis have been previously identified (i.e. food dependent exercise induced anaphylaxis, venom anaphylaxis, biphasic anaphylaxis). 
+Anaphylaxis is a non-homogeneous clinical diagnosis, depending on various triggering and augmenting factors [@Simons2015]. This variability introduces a wide range of possible reaction-symptom severities. Therefore, multiple sub-types of anaphylaxis have been previously identified (i.e. food dependent exercise induced anaphylaxis, venom anaphylaxis, biphasic anaphylaxis). 
 
 The mainstay of anaphylaxis management is the intramuscular dose of adrenaline [@Grabenhenrich2018], but in the most severe cases of anaphylaxis it might be insufficient to restore a stable patient status. Refractory anaphylaxis (although the established definition is lacking) might be defined as anaphylaxis meeting the criteria by NIAID/FAAN [@Sampson2006] which, after the treatment with at least 2 doses of minimum 300 µg adrenaline, does not achieve normalization of clinical symptoms. Typical elicitors and symptoms of refractory anaphylaxis, as well as the therapeutic strategy for the most severe cases, differ from the usual reactions [@Francuzik2018] and call for a specific research and targeted guideline development for refractory anaphylaxis cases.
 
@@ -82,7 +81,7 @@ The final database consisted of `r sum(countries)` cases of refractory anaphylax
 We compared the frequency of various elicitors, symptoms, and factors known to incease the risk of severe anphylaxis [@Worm2018] in both groups. We also compared how the cases were managed.
 
 <!-- ## Data handling and statisitcs -->
-The statistical analysis was performed in the R Statistical Package [@R]. Simple comparison of nominal variables was performed using Fischer's exact test, continous variables were analysed using Mann-Whithney U test. We defined statistical significance as α = 0.05. Data along with the analysis script can be accessed at github.com/wolass/RefractoryAnaOrg.
+The statistical analysis was performed in the R Statistical Package [@R]. Simple comparison of categorical variables was performed using Fisher's exact test, continous variables were analysed using Mann-Whithney U test. We defined statistical significance as α = 0.05. Data along with the analysis script can be accessed at www.github.com/wolass/RefractoryAnaOrg.
 
 # Results
 
@@ -115,7 +114,7 @@ Insect-venom-elicited, refractory cases were significantly less often elicited b
 <!-- ## Symptoms -->
 Milder anaphylaxis symptoms (i.e. pruritus, gastrointestinal symptoms, vertigo, chest and throat tightness) were significantly less present in refractory anaphylaxis cases, whereas respiratory and cardiac arrest, as well as inspiratory and expiratory distress, and death were more often associated with the refractory anaphylaxis cases. Table \@ref(tab:symptTab) summarizes the most prominent differences in anaphylaxis symptoms among both groups.
 <!-- ## Death  -->
-Fatal reactions frequently occurred 30 minutes to 120 minutes after exposure - when the cardiopulmonary resuscitation was unsuccessful. In cases where patients responded to life support procedures, but failed to be reanimated due to post-resuscitative complication (e.g. hypoxic brain injury), death occured in the next 3-8 days. 
+Fatal reactions frequently occurred 30 minutes to 120 minutes after exposure - when the cardiopulmonary resuscitation was unsuccessful. In cases where patients responded to life support, but failed to be reanimated due to post-resuscitative complication (e.g. hypoxic brain injury), death occured in the next 3-8 days. 
 
 <!-- ## Therapy -->
 ## Adrenaline i.v. as first-line treatment was given frequently in refractory anaphylaxis
@@ -128,13 +127,12 @@ adr2prof <- rcalc("q_530_adren2_who_v5","professional")
 
 ```
 
-When evaluating the therapeutic procedures, adrenaline i.v. as a first-line treatment of anaphylaxis was significantly more often given in refractory cases (`r therapyTab[2,3]`% vs. `r therapyTab[1,3]`%, p < 0.0001).  
-Median time to the second dose of adrenaline was also shorter in refractory cases (`r med.time2[[2]]` minutes vs. 15 minutes in non-refractory cases, p <0.0001). 
+When evaluating the therapeutic procedures, adrenaline i.v. as a first-line treatment of anaphylaxis was significantly more often given in refractory cases (`r therapyTab[2,3]`% vs. `r therapyTab[1,3]`%, p < 0.0001). Median time to the second dose of adrenaline was also shorter in refractory cases (`r med.time2[[2]]` minutes vs. 15 minutes in non-refractory cases, p <0.0001). 
 <!-- `r med.timep$p.value %>% signif(3)`). -->
 <!--  wilcox.test(data3$q_530_adren2_time_in_min_v5[data3$rANA=="yes"],data3$q_530_adren2_time_in_min_v5[data3$rANA=="no"])$p.value %>% signif(3)-->
 <!--In `r adr2prof[3]`% of refractory cases, the second dose of adrenaline was given by a professional (significantly more than in non-refractory cases `r adr2prof[2]`%, p < 0.0001).  -->
 
-Corticosteroids i.v. were the second most frequently administered group of drugs in refractory cases (as a first and second line treatment), outpacing antihistaminic drugs and volume replacement therapy, and were significantly more often given in refractory cases. Volume replacement therapy was given initially in `r therapyTab[4,3]`% of refractory cases but was sustained only in `r therapyTab[5,3]`% as the therapy progressed in the hospital environment. 
+Corticosteroids i.v. were the second most frequently administered group of drugs in refractory cases (as a first and second line treatment), outpacing antihistaminic drugs and volume replacement therapy, and were significantly more often given in refractory cases. Volume replacement therapy was given initially in `r therapyTab[4,3]`% of refractory cases and was sustained only in `r therapyTab[5,3]`% as the therapy progressed in the hospital environment. 
 <!--(possible counfounding variable by patients who died!!! they did not receive second line therapy and might need to be discarded from the analysis)--> 
 
 Second line medication like dopamine, glucagon and methylene blue were not given in all refractory anaphylaxis cases as well as in severe non-refractory ones. However, patients with refractory anaphylaxis were more frequently admitted to the hospital (`r therapyTab[18,3]`%) and treated at the ICUs (`r therapyTab[19,3]`%). Table \@ref(tab:therapyTab) illustrates the therapy of refractory anaphylaxis cases.
@@ -158,21 +156,21 @@ The intensity of physical exercise exceeding the reaction was indifferent betwee
 # Discussion
 
 ## Frequency and patients at risk
-Our findings suggest that around 1 in 100 severe anaphylaxis patients will not respond to the standard therapy with adrenaline, commonly outlined in anaphylaxis management guidelines [@Muraro2014]. Such cases have the highest risk of a fatal outcome, and therefore need to be treated accordingly. An early use of drugs (e.g. methylene blue and dopamine) might increse the survival chance. 
+Our findings suggest that around 1 in 100 severe anaphylaxis patients will not respond to the standard therapy with adrenaline, commonly outlined in anaphylaxis management guidelines [@Muraro2014]. Such cases have the highest risk of a fatal outcome, and therefore need to be treated accordingly. An early use of drugs (e.g. methylene blue and dopamine) might increse their survival chance. 
 
 Overall, the severity of an anaphylaxis and its probable transition into a refractory episode might be described by four co-influencing mechanisms: 
-1) elicitors - the type of an eliciting agent and duration of the exposition, which correlates to the amount of the allergen and its metabolisation; 
+1) elicitors - the type of an eliciting agent and duration of the exposition, which correlates to the amount of the allergen and its metabolism; 
 2) cofactors - the presence of other factors which may increase the severity of a given reaction i.e. concomitant use of a betablocker etc.;
 3) compensation - how well is the body able to compensate reaction symptoms e.g. hypotension; 
 4) therapy - how fast and accurately the therapeutic procedures were introduced (Fig. \@ref(fig:theory)).
 <!-- This theory might explain why younger patients are able to better compensate the same trigger which would elicit a refractory reaction in eldery patients.  -->
 
 ## Elicitors
-Drugs were the most commonly occurring elicitor, which is in concordance with the literature and our previous findings [@Francuzik2018]. Multiple medications with mast cell activation potential [@Hepner2003] given in a perioperative setting increase the chance of a hypersensitivity reaction and drug interactions [@Ebo2007]. Recent study on IgE-independent anaphylaxis showed that peroperative drugs (i.e. rocuronium, turbocurarine, fluorochinolones, atracurium) may trigger anaphylaxis by activating mast cells directly through the MrgprX2 receptor [@Mcneil2015]. Therefore patients who undergo surgical procedures and have a history of anaphylaxis should remain under extraordinary caution. 
+Drugs were the most commonly occurring elicitor, which is in concordance with the literature and our previous findings [@Francuzik2018]. Multiple medications with mast cell activation potential [@Hepner2003] given in a perioperative setting increase the chance of a hypersensitivity reaction and drug interactions [@Ebo2007]. Recent study on IgE-independent anaphylaxis showed that peroperative drugs (i.e. rocuronium, turbocurarine, fluorochinolones, atracurium) may trigger anaphylaxis by activating mast cells directly through the MRGPRX2 receptor [@Mcneil2015]. Therefore patients who undergo surgical procedures and have a history of anaphylaxis should remain under extraordinary caution. 
 
 Antibiotics, although commonly triggering IgE-dependent reactions [@saxon1983], are rarely reported in the literature as the cause of a refractory anaphylaxis. RCM on the other hand, commonly elicit IgE-independent hypersensitivity episodes that are refractory to adrenaline and are responsible for 1-5 deaths per 100,000 administrations  [@Greenberger1991]. We previously saw RCM to be the most frequent elicitor of refractory anaphylaxis [@Francuzik2018]. It might be that RCM promote  complement activation [@Wang2011] and thus - unspecific activation of multiple immune cell classes (mast cells, basophiles, platelets and neutophiles). Therefore, treatment with adrenaline may be less effective in these reactions.
 
-Only few refractory cases were elicited by yellow-jacket-stings. Therefore, the ratio of yellow-jacket to honey-bee venom elicited anaphylaxis was inverted in the refractory group. Reason for this observation might include higher allergen exposition due to either longer exposition to the allergen (bee's sting remains in the skin) or the venom volume being 10 times higher than in a wasp sting [@Visscher1996].
+Only few refractory cases were elicited by yellow-jacket-stings. Therefore, the ratio of yellow-jacket to honey-bee venom elicited anaphylaxis was inverted in the refractory group. Reasons for this observation might include higher allergen exposition due to either longer exposition to the allergen (bee's sting remains in the skin) or the venom volume being 10 times higher than in a wasp sting [@Visscher1996].
 <!-- Patients should remove the bee sting as quickly as possible (optimal < 2 seconds) . -->
 
 <!-- Mastoparans are a potent family of mast cell activators through G-protein coupled receptors (GPCRs). It is likely that their affinity to GPCRs might vary and the composition of mastoparans might depend on the species [source].   -->
@@ -180,21 +178,20 @@ Only few refractory cases were elicited by yellow-jacket-stings. Therefore, the 
 <!-- Carpa ???-->
 
 ## Risk factors 
-Although we have previously identified older age and male sex to be associated with severe anaphylaxis [@Worm2018], these factors seem to be less important when refractory anaphylaxis is considered. Asthma and malignant diseases in the medical history were more frequently present in the refractory anaphylaxis group. The underlying reason is unclear. It is however interesting that past malignant diseases were mostly recognized in male refractory anaphylaxis patients.
+Although we have previously identified older age and male sex to be associated with severe anaphylaxis [@Worm2018], these factors seem to be less important when refractory anaphylaxis is considered. Asthma and malignant diseases in the medical history were more frequently present in the refractory anaphylaxis group. The underlying reason is unclear. 
 
 <!-- Is it possible that the cancer drugs made them more susceptible to refractory anaphylaxis? -->
 ```{r}
 temp <- data3[data3$rANA=="yes",]
 mean_age_malig <- data3$d_age %>% split(data3$q_410_malig_prev_v5 %>% factor) %>% lapply(mean)
 ```
-Many cases of hypersenitivity due to cancer drugs were described in the literature, but malignancy in medical history has never been previously associated with severe anaphylaxis. 
-It can be possible that patients with reported malignancies were simply older (mean age of `r mean_age_malig[[1]] %>% round(1)` vs `r mean_age_malig[[2]] %>% round(1)` years, p <
+It is however interesting that past malignant diseases were mostly recognized in male refractory anaphylaxis patients. Many cases of hypersenitivity due to cancer drugs were described in the literature, but malignancy in medical history has never been previously associated with severe anaphylaxis. It is possible that patients with reported malignancies were simply older (mean age of `r mean_age_malig[[1]] %>% round(1)` vs `r mean_age_malig[[2]] %>% round(1)` years, p <
 <!-- `r fisher.test(data3$d_age[which(data3$rANA=="yes")],data3$q_410_malig_prev_v5[which(data3$rANA=="yes")])`  --> 
 0.001) and therefore less able to compensate the anaphylactic shock.
 
 We previously observed concomitant asthma to be associated with less severe  anaphylaxis [@Worm2018]. However, the present analysis suggests concomitant asthma as a risk factor for a refractory episode. It is possible that during a refractory episode the bronchospasm is mediated via other mediators (deriving from basophiles, and eosinophiles) what makes it refractory to adrenaline and therefore results in a prolonged anaphylactic episode. This might also explain why we saw more respiratory distress symptoms in the refractory anaphylaxis cases. 
 
-Psychological stress in temporal proximity to the reaction might increase the severity of the reaction as we previously reported [@Worm2018]. It has been reported that stress induces the complement cascade activation [@Burns2008]. Substance P which is released during stress [@Arck2003] is a known vasodilator [@Bos92] and can activate mast cells directly [@Singh1999]. These mediators may contribute to an increased mast cell response and more severe anaphylaxis.
+Psychological stress in temporal proximity to the reaction might increase the severity of the reaction as we previously reported [@Worm2018]. Stress induces the complement cascade activation [@Burns2008]. Substance P, which is released during stress [@Arck2003], is a known vasodilator [@Bos92] and can activate mast cells directly [@Singh1999]. These mediators may contribute to an increased mast cell response and more severe anaphylaxis.
 
 <!-- We have previously proven the role of ASA in increasing the risk of severe anaphylaxis [@].  Could not find the reference -->
 The role of PPI as a risk factor for severe anaphylaxis has been indicated in prolonging the exposition to an oral allergen (preventing its degradation due to lower gastric acid production) [@Wlbing2013]. Moreover, there are reports on PPI as elicitors of anaphylaxis [@Natsch2000]. We observed a significantly higher rate of PPI intake in the refractory anaphylaxis group. Its mechanistic contribution to the increase in  severity of an episode or being responsible for its refractoriness cannot be estimated based on this observation. 
@@ -217,13 +214,13 @@ Adrenaline i.v. as first-line therapy use was high in the refractory cases. This
 
 Methylene blue and vasopressors have been described to successfully restore refractory hypotension and recommended by managment guidelines [@Muraro2014], but their actual use in anaphylaxis patients is scarce. There are multiple reports of successful methylene blue use in refractory anaphylaxis [@Francuzik2018]. Evora [@Evora2000] reported 6 cases of refractory, peroperative anaphylaxis (to RCM and penicillin) which responded to methylene blue i.v. within minutes. Its mode of action is by blocking the guanylate cyclase and therefore preventing further nitric-oxide-dependent vasodilation in a distributive shock [@dfaz]. 
   
-Suprisingly, even though multiple anaphylaxis management guidelines recommend glucagon infusions in cases of concomitant beta-blocker therapy in anaphylactic patients [@Simons2011;@Lieberman;@Muraro2014], it has not been administered in any of the severe or refractory cases. Glucagon has been reported to sucessfully relive refractory anaphylaxis [@Zaloga1986;@Javeed1996] by directly activating the adenylyl cyclase and therefore bypassing the \beta-adrenergic receptor blockade [@Zaloga1986].   
+Suprisingly, even though multiple anaphylaxis management guidelines recommend glucagon infusions in cases of concomitant beta-blocker therapy in anaphylactic patients [@Simons2011;@Lieberman;@Muraro2014], it has not been administered in any of the severe or refractory cases. Glucagon has been reported to sucessfully relive refractory anaphylaxis [@Zaloga1986;@Javeed1996] by directly activating the adenylyl cyclase and therefore bypassing the β-adrenergic receptor blockade [@Zaloga1986].   
 
 ## Limitations and strengths
 The low number of refractory cases prevented us from analyzing the data with more advanced statistical models. However, our analysis is the first published report on a patient sample containing over 30 refractory anaphylaxis cases.
 
-Definition  of refractory anaphylaxis is not universal. Also in this study, the confirmation of a refractory anaphylaxis based on the answers to our online questionnaire posed difficulties.
-If a fatal reaction occured before the second dose of adrenaline was administered to the patient - it could not be diagnosed as refractory (as we defined at least two doses of minimum 300 µg adrenaline for refractory anaphylaxis) although it in fact could have been refractory. 
+Definition  of refractory anaphylaxis is not universal. The confirmation of a refractory anaphylaxis based on the answers to our online questionnaire posed difficulties.
+If a fatal reaction occured before the second dose of adrenaline was administered to the patient - it could not be diagnosed as refractory (as we defined at least two doses of minimum 300 µg adrenaline for refractory anaphylaxis) although, it in fact could have been refractory. 
 
 Comparison of refractory anaphylaxis with patients suffering from severe anaphylaxis enabled us to distinguish patients with a higher risk of developing a refractory episode. However we cannot address the question which patients had a higher risk of experiencing anaphylaxis per se. 
 
@@ -263,7 +260,7 @@ knitr::include_graphics("../figures/diag2.png")
 # Tables
 
 ```{r demoTab}
-knitr::kable(demoTab, caption = "Summary of the refractory anaphylaxis cases. Age is represented by a mean value, other variables as fractions [%]. DM - diabetes mellitus, p value is derived from a Mann-Whitney U test or a Chi^2^ test for interval and categorical variables respectively.",
+knitr::kable(demoTab, caption = "Summary of the refractory anaphylaxis cases. Age is represented by a mean value, other variables as fractions [%]. DM - diabetes mellitus, p value is derived from a Mann-Whitney U test or a Chi^2^ test for interval and categorical variables respectively. Refractory group was compared to severe anaphylaxis cases without differentiating into male and female subgroups.",
              digits = 2,
              align = rep("r",10),
              nsmall=2)
@@ -274,8 +271,8 @@ knitr::kable(demoTab, caption = "Summary of the refractory anaphylaxis cases. Ag
 
 
 ```{r elicitorTab}
-knitr::kable(elicitorTab, caption = "Summary of elicitors in the refractory anaphylaxis cases and severe, non-refractory anaphylaxis cases as a control. ANA - anaphylaxis, p-value derived from the Fisher exact test.",
-             col.names = c("n","refractory ANA [%]","severe ANA [%]","p value","Age","Male sex [%]","Perioperative [%]","Food allergy [%]")
+knitr::kable(elicitorTab[,c(1,5,6,7,8,2,3,4)], caption = "Summary of elicitors in the refractory anaphylaxis cases and severe, non-refractory anaphylaxis cases as a control. ANA - anaphylaxis, Age is represented as a mean, p-value derived from the Fisher's exact test.",
+             col.names = c("n","Age","Male sex [%]","Perioperative [%]","Food allergy [%]","refractory ANA [%]","severe ANA [%]","p value")
             #digits = 1,
              # align = rep("r",10),
              # trim=T,
@@ -289,30 +286,30 @@ knitr::kable(elicitorTab, caption = "Summary of elicitors in the refractory anap
 
 
 ```{r elicitExact}
-knitr::kable(cbind(elicitExact[,5],elicitExact[,2:4]), caption = "Summary of the elicitors broken down to specific elicitors from each group in the refractory anaphylaxis cases and severe anaphylaxis cases as a control. ANA - anaphylaxis, p-value derived from the Fisher exact test. ",
+
+knitr::kable(cbind(c("Antibiotics","X-ray medium","Muscle relaxant","Legumes","Bee venom","Yellow-jacket venom"),elicitExact[,2:4]), caption = "Summary of the elicitors broken down into specific elicitors from each group in the refractory anaphylaxis cases and severe anaphylaxis cases as a control. ANA - anaphylaxis, p-value derived from the Fisher's exact test. ",
              col.names = c("Elicitor","severe ANA [%]","refractory ANA [%]","p value"))
 ```
 
-p-value derived from the Fisher exact test. 
 
 ##### 
 
 ```{r symptTab}
-knitr::kable(symptTab[,1:4], caption = "Summary of the symptoms in the refractory anaphylaxis cases and severe, non-refractory anaphylaxis cases as a control. ANA - anaphylaxis, p-value derived from the Fisher exact test. ",
+knitr::kable(symptTab[,1:4], caption = "Summary of the symptoms in the refractory anaphylaxis cases and severe, non-refractory anaphylaxis cases as a control. ANA - anaphylaxis, p-value derived from the Fisher's exact test. ",
              col.names = c("Symptom","severe ANA [%]","refractory ANA [%]","p value"))
 ```
 
 ##### 
 
 ```{r therapyTab}
-knitr::kable(therapyTab[,1:4], caption = "Summary of therapeutic measures in the refractory anaphylaxis cases and severe, non-refractory anaphylaxis cases as a control. 2nd line therapy was performed after the initial rescue individual called for a professional medical emergeny team. ANA - anaphylaxis, p-value derived from the Fisher exact test. ",
+knitr::kable(therapyTab[,1:4], caption = "Summary of therapeutic measures in the refractory anaphylaxis cases and severe, non-refractory anaphylaxis cases as a control. '2nd line' refers to the therapy performed by the professional medical emergency team after the initial rescue procedures. ANA - anaphylaxis, p-value derived from the Fisher's exact test. ",
              col.names = c("Therapy","severe ANA [%]","refractory ANA [%]","p value"))
 ```
 
 ##### 
 
 ```{r cofactorsTab}
-knitr::kable(cofactorsTabF[,1:4], caption = "Factors potentially increasing the risk of a severe anaphylaxis investigated in refractory cases. ANA - anaphylaxis, p-value derived from the Fisher exact test. ",
+knitr::kable(cofactorsTabF[,1:4], caption = "Factors potentially increasing the risk of a severe anaphylaxis investigated in refractory cases. ANA - anaphylaxis, p-value derived from the Fisher's exact test. ",
              col.names = c("Factor","severe ANA [%]","refractory ANA [%]","p value"))
 ```
 
