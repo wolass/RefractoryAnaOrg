@@ -558,8 +558,18 @@ demoTabsP <- cbind(n = data3$b_sex %>% table(data3$rANA) %>% summary() %>% {.$p.
 
 )
 
+require(plyr)
 demoTab <- rbind(demoTab,demoTabs,demoTabsP)
 demoTab <- cbind(Group = c("refractory","refractory","severe","severe","p value"),demoTab)
+cols <- dimnames(demoTab)[[2]]
+demoTab %<>%  unlist %>% matrix(nrow = 5,byrow = F)
+demoTab %<>% as.data.frame()
+demoTab %<>% {data.frame(.[,1],apply(.[2:10],MARGIN = 2,FUN =  function(x){
+  as.character(x) %>% as.numeric()
+}))}
+demoTab %<>% {data.frame(Sex = c("female","male","female","male",""),.)}
+colnames(demoTab) <- c("Sex",cols)
+
 
 rdb$q_410_masto_cur%>% split(rdb$b_sex) %>% lapply(.,function(x){(length(which(x=="yes"))/length(x)*100) %>% signif(3)})
 rdb$q_410_asthma_cur%>% split(rdb$b_sex) %>% lapply(.,function(x){(length(which(x=="yes"))/length(x)*100) %>% signif(3)})
@@ -600,6 +610,17 @@ elicitorTab <- cbind(n = rdb$d_elicitor_gr5 %>% summary(),
                  `Food allergy` = rdb$q_410_foodallergy_cur_v6%>% split(rdb$d_elicitor_gr5) %>%
                    lapply(.,function(x){(length(which(x=="yes"))/length(x)*100) %>% signif(3)})
 )
+
+rn <- rownames(elicitorTab)
+cn <- colnames(elicitorTab)
+elicitorTab %<>%  unlist %>% matrix(nrow = 5,byrow = F) %>% as.data.frame()
+# elicitorTab %>% {data.frame(.[,1],apply(.[2:10],MARGIN = 2,FUN =  function(x){
+#   as.character(x) %>% as.numeric()
+# }))}
+elicitorTab %<>% {data.frame(Elicitor = rn,.)}
+colnames(elicitorTab) <- c("Elicitor",cn)
+
+
 
 #### 3. Risk Factors #####
 
@@ -646,12 +667,12 @@ therapyTab[,1] <-
     "volume, 2nd line",
     "antihistaminics i.v.",
     "antihistaminics i.v. 2nd line",
-    "corticosteoids, all routes",
+    "corticosteroids, all routes",
     "corticosteroids i.v.",
     "corticosteroids i.v. 2nd line",
     "beta-2-mimetics i.v.",
     "beta-2-mimetics inh. 2nd line",
-    "theophyline i.v.",
+    "theophylline i.v.",
     "100% oxygen",
     "dopamine i.v.",
     "glucagon i.v.",
@@ -661,6 +682,7 @@ therapyTab[,1] <-
 
 #### 5. Fatal cases ####
 data3$q_140_fatal %>% table(data3$rANA)
+rcalc("q_140_fatal")
 
 #### 6. Exact elicitor ####
 elicitExact <- rbind(
@@ -683,8 +705,8 @@ symptTab[,1] <- c("Pruritus",
                   "Throat tightness",
                   "Expiratory distress",
                   "Inspiratory stridor",
-                  "Loss of consciusness",
-                  "Cardiac arrythmia",
+                  "Loss of consciousness",
+                  "Cardiac arrhythmia",
                   "Cardiac arrest",
                   "Vertigo",
                   "Death")
@@ -730,7 +752,7 @@ nodes <-
              paste0("Reactions requiring\nICU\nn = ",length(which(refractory.ICU=="yes"&refractory.death=="no"))),
              paste0("Cases eliminated after manual revision:\nMultiple elicitors (n = 1)\n",
                     "Biphasic reactions responsive to Adrenaline (n = ", R1-1,")\n",
-                    "Extended time between adrenalin doses indicating responiveness (n = ",R2,")\n",
+                    "Extended time between adrenalin doses indicating responsiveness (n = ",R2,")\n",
                     "Adequate response after a second dose of adrenaline (n = ",R3,")")),
     #color = c("red", "green",
     #          "grey", "blue"),
