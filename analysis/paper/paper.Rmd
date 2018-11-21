@@ -402,19 +402,18 @@ knitr::kable(demoTab , caption = "Summary of the refractory anaphylaxis cases. A
 
 ##### 
 
-
-
 ```{r elicitorTab}
-knitr::kable(elicitorTab[,c(0,1,5,6,7,8,2,3,4)+1], caption = "Summary of elicitors in the refractory anaphylaxis cases and severe, non-refractory anaphylaxis cases as a control. ANA - anaphylaxis, Age is represented as a mean, p-value derived from the Fisher's exact test."
+knitr::kable(elicitorTab[,c(0,1,5,6,7,8,2,3,4)+1], caption = "Summary of elicitors in the refractory anaphylaxis cases and severe, non-refractory anaphylaxis cases as a control. ANA - anaphylaxis, Age is represented as a mean, p-value derived from the Fisher's exact test.",
              #col.names = c("n","Age","Male sex [%]","Perioperative [%]","Food allergy [%]","refractory ANA [%]","severe ANA [%]","p value")
-             
+              align = rep("r",10),
+             nsmall=2)
             #digits = 1,
              # align = rep("r",10),
              # trim=T,
              # scientific=F,
              # nsmall=3,
              #drop0trailing = F
-             )
+             
 ```
 
 ##### 
@@ -425,8 +424,8 @@ knitr::kable(elicitorTab[,c(0,1,5,6,7,8,2,3,4)+1], caption = "Summary of elicito
 knitr::kable(data.frame(c("Antibiotics","X-ray medium","Muscle relaxant","Legumes","Bee venom","Yellow-jacket venom"),
                    as.numeric(elicitExact[,2:4]) %>% matrix(nrow = 6)), 
              caption = "Summary of the elicitors broken down into specific elicitors from each group in the refractory anaphylaxis cases and severe anaphylaxis cases as a control. ANA - anaphylaxis, p-value derived from the Fisher's exact test. ",
-             col.names = c("Elicitor","severe ANA [%]","refractory ANA [%]","p value"),
-             digits = c(0,2,2,4)
+             col.names = c("Elicitor","severe ANA [%]","refractory ANA [%]","p value")
+             #digits = c(0,2,2,4)
              )
 ```
 
