@@ -5,17 +5,13 @@ RefractoryAnaOrg
 
 This repository contains the data and code for our paper:
 
-> Authors, (YYYY). *Title of paper*. Name of journal/book <https://doi.org/xxx/xxx>
-
-Our pre-print is online here:
-
-> Authors, (YYYY). *Title of paper*. Name of journal/book, Accessed 12 Mär 2018. Online at <https://doi.org/xxx/xxx>
+> Francuzik et al, (2018). *Refractory anaphylaxis: Data from the European Anaphylaxis Registry*. Submitted to Frontiers in Immunology <https://doi.org/xxx/xxx>
 
 ### How to cite
 
 Please cite this compendium as:
 
-> Authors, (2018). *Compendium of R code and data for 'Title of paper'*. Accessed 12 Mär 2018. Online at <https://doi.org/xxx/xxx>
+> Francuzik et al, (2018). *Compendium of R code and data for 'Refractory anaphylaxis: Data from the European Anaphylaxis Registry'*. Accessed 12 Nov 2018. Online at <https://doi.org/xxx/xxx>
 
 ### How to download or install
 
@@ -34,7 +30,7 @@ devtools::install_github("wolass/RefractoryAnaOrg")
 
 **Code :** See the [DESCRIPTION](DESCRIPTION) file
 
-**Data :** [CC-0](http://creativecommons.org/publicdomain/zero/1.0/) attribution requested in reuse
+**Data :** [CC-BY-4.0](http://creativecommons.org/publicdomain/zero/1.0/) attribution requested in reuse
 
 ### Contributions
 
