@@ -3,6 +3,9 @@
 RefractoryAnaOrg
 ================
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1493846.svg)](https://doi.org/10.5281/zenodo.1493846)
+
+
 This repository contains the data and code for our paper:
 
 > Francuzik et al, (2018). *Refractory anaphylaxis: Data from the European Anaphylaxis Registry*. Submitted to Frontiers in Immunology <https://doi.org/xxx/xxx>
@@ -11,7 +14,7 @@ This repository contains the data and code for our paper:
 
 Please cite this compendium as:
 
-> Francuzik et al, (2018). *Compendium of R code and data for 'Refractory anaphylaxis: Data from the European Anaphylaxis Registry'*. Accessed 12 Nov 2018. Online at <https://doi.org/xxx/xxx>
+> Francuzik, (2018). *Compendium of R code and data for: Refractory anaphylaxis: Data from the European Anaphylaxis Registry*. Accessed 12 Nov 2018. Online at <https://doi.org/10.5281/zenodo.1493846>
 
 ### How to download or install
 
