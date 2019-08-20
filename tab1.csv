@@ -1,0 +1,6 @@
+"","Sex","Group","n","Age","Cardiologic","DM","Food allergy","Mastocytosis","Malignancy","Atopic dermatitis","Thyroid conditions","tryptase [median]"
+"1","female","venom-elicited",2079,46.7,22.078,2.213,1.78,3.078,1.635,2.694,13.997,4.195
+"2","male","venom-elicited",2403,44.2,25.052,3.579,1.415,3.204,0.957,1.789,3.745,4.67
+"3","female","other elicitor",3895,35.4,13.35,2.182,9.063,0.847,2.413,11.04,8.832,4.045
+"4","male","other elicitor",3219,25.4,10.842,2.33,13.11,0.808,1.833,17.428,1.833,4.5
+"5","","p value",1.67e-18,1e-04,1e-04,1e-04,1e-04,1e-04,1e-04,1e-04,1e-04,0.001
