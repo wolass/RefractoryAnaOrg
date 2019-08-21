@@ -130,8 +130,8 @@ locTab <- data3$q_152_location %>% table(data3$rANA)
 Refractory anaphylaxis was most commonly elicited by drugs (significantly more often than in severe, non-refractory cases), followed by food and insects (table \@ref(tab:elicitorTab)). The most common drugs eliciting anaphylaxis refractory to adrenaline were antibiotics (`r elicitExact[1,3]`%) and radiocontrast media (RCM, `r elicitExact[2,3]`%). Patients with refractory anaphylaxis more frequently experienced the reaction while undergoing a medical procedure (`r (locTab[3,2]/sum(locTab[,2])*100) %>% {signif(.,3)}`% vs. `r (locTab[3,1]/sum(locTab[,1])*100) %>% {signif(.,3)}` in severe, non-refractory cases, p < 0.0001) 
 
 
-`r elicitorTab[1,8]`% of food elicited refractory cases had a previously confirmed diagnosis of food allergy. Severe cases of anaphylaxis were most frequently elicited by insects and food triggers.
-Insect-venom-elicited, refractory cases were significantly less often elicited by yellow-jacket-stings (but not by bee-stings) than severe, non-refractory cases (table \@ref(tab:elicitExact)). 
+`r elicitorTab[1,9]`% of food elicited refractory cases had a previously confirmed diagnosis of food allergy. Severe cases of anaphylaxis were most frequently elicited by insects and food triggers.
+Refractory anaphylaxis cases elicited by insects were more often elicited by bees than severe, non-refractory cases, p = `r table(data3$q_340_insects,data3$rANA) %>%  {rbind(addmargins(.[3:8,],1) %>% tail(1),.[2,])} %>% as.matrix() %>% fisher.test() %>% {.$p.value} %>% round(4)` (table \@ref(tab:elicitExact)). 
 
 ## Refractory anaphylaxis is life-threatening
 <!-- ## Symptoms -->
@@ -403,7 +403,8 @@ knitr::kable(demoTab , caption = "Summary of the refractory anaphylaxis cases. A
 ##### 
 
 ```{r elicitorTab}
-knitr::kable(elicitorTab[,c(0,1,5,6,7,8,2,3,4)+1], caption = "Summary of elicitors in the refractory anaphylaxis cases and severe, non-refractory anaphylaxis cases as a control. ANA - anaphylaxis, Age is represented as a mean, p-value derived from the Fisher's exact test.",
+knitr::kable(elicitorTab#[,c(0,1,5,6,7,8,2,3,4)+1]
+             , caption = "Summary of elicitors in the refractory anaphylaxis cases and severe, non-refractory anaphylaxis cases as a control. ANA - anaphylaxis, Age is represented as a mean, p-value derived from the Fisher's exact test.",
              #col.names = c("n","Age","Male sex [%]","Perioperative [%]","Food allergy [%]","refractory ANA [%]","severe ANA [%]","p value")
               align = rep("r",10),
              nsmall=2)

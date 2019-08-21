@@ -45,6 +45,25 @@ rcalc <- function(var,level="yes"){
   return(c(var,prt[1,1],prt[1,2],p,l))
 }
 
+rcalc2 <- function(var,level="yes"){
+  tab <- table(data3[,var],data3$rANA)
+  if(level %in% (data3[,var] %>% levels)){
+    # pn <- tab[level,"no"]
+    # pp <- tab[level,"yes"]
+    l <- level
+   } else {
+    # pn <- tab[2,"no"]
+    # pp <- tab[2,"yes"]
+     l <- levels(data3[,var])[2]
+   }
+  # nn <- data3$rANA %>% factor %>% summary %>% {.[1]}-pn
+  # np <- data3$rANA %>% factor %>% summary %>% {.[2]}-pp
+  eval <- tab[1:2,1:2]
+  prt <- (prop.table(eval,2)*100) %>% {signif(.,3)}
+  p <- eval %>% fisher.test() %>% .$p.value %>% roP
+  return(c(var,prt[2,1],prt[2,2],p,l))
+}
+
 roP<- function(x){
   ifelse(x > 0.001,
   round(x,3),ifelse(x==0,0,0.0001)
@@ -58,6 +77,10 @@ f1 <- function(x){
 f2 <- function(x){
   x %>% table(data3$rANA) %>% {.[1:2,]} %>% fisher.test() %>% {.$p.value} %>% roP
 }
+f2_rdbsdb <- function(x){
+  x %>% table(rdbsdb$rANA) %>% {.[1:2,]} %>% fisher.test() %>% {.$p.value} %>% roP
+}
+
 f3 <- function(x){
   x %>%
     lapply(function(x){(length(which(x=="yes"))/length(x)*100) %>% roP})
@@ -507,9 +530,9 @@ v<- list()
 v$allCases <- length(data3$b_submitdate)
 v$casesR <- length(which(data3$rANA=="yes"))
 v$casesC <- length(which(data3$rANA=="no"))
-v$perioperative <- rcalc("perioperative")
+v$perioperative <- rcalc2("perioperative")
 v$casesInsect <- table(data3$q_340_insects[data3$rANA=="yes"])
-v$mortality <- rcalc("q_140_fatal")# ** Tables ----
+v$mortality <- rcalc2("q_140_fatal")# ** Tables ----
 # This section deals with tables. Prepare them here and reference to them in the paper.Rmd
 
 sdb <- data3[which(data3$rANA=="no"),]
@@ -545,16 +568,21 @@ demoTabs <- cbind(n = sdb$b_sex %>% summary(),
                  `tryptase [median]` = sdb$q_212_tryptase_value_v5 %>% split(sdb$b_sex) %>% lapply(median,na.rm=T)
 )
 
-demoTabsP <- cbind(n = data3$b_sex %>% table(data3$rANA) %>% summary() %>% {.$p.value} %>% signif(3),
-                  Age = data3$d_age %>% split(data3$rANA) %>% f1,
-                  Cardiologic = data3$q_410_cardio_cur %>% f2,
-                  DM = data3$q_410_diab_cur_v6 %>% f2,
-                  `Food allergy` = data3$q_410_foodallergy_cur_v6 %>% f2,
-                  Mastocytosis = data3$q_410_masto_cur %>% f2,
-                  Malignancy = data3$q_410_malig_cur %>% f2,
-                  `Atopic dermatitis` = data3$q_410_ad_cur %>% f2,
-                  `tryptase [mean]` = data3$q_212_tryptase_value_v5[data3$rANA=="no"] %>%
-                    wilcox.test(data3$q_212_tryptase_value_v5[data3$rANA=="yes"]) %>% {.$p.value} %>% round(3)
+rdbsdb <- rdb %>%
+  dplyr::mutate(rANA = "yes") %>%
+  dplyr::full_join(sdb)
+
+demoTabsP <- cbind(n = rdbsdb$b_sex %>% table(rdbsdb$rANA) %>%
+                     summary() %>% {.$p.value} %>% signif(3),
+                  Age = rdbsdb$d_age %>% split(rdbsdb$rANA) %>% f1,
+                  Cardiologic = rdbsdb$q_410_cardio_cur %>% f2_rdbsdb(),
+                  DM = rdbsdb$q_410_diab_cur_v6 %>% f2_rdbsdb(),
+                  `Food allergy` = rdbsdb$q_410_foodallergy_cur_v6 %>% f2_rdbsdb(),
+                  Mastocytosis = rdbsdb$q_410_masto_cur %>% f2_rdbsdb(),
+                  Malignancy = rdbsdb$q_410_malig_cur %>% f2_rdbsdb(),
+                  `Atopic dermatitis` = rdbsdb$q_410_ad_cur %>% f2_rdbsdb(),
+                  `tryptase [mean]` = rdbsdb$q_212_tryptase_value_v5[rdbsdb$rANA=="no"] %>%
+                    wilcox.test(rdbsdb$q_212_tryptase_value_v5[rdbsdb$rANA=="yes"]) %>% {.$p.value} %>% round(3)
 
 )
 
@@ -594,21 +622,22 @@ ggplot(data3[!is.na(data3$rANA),],aes(q_212_tryptase_value_v5,color=rANA))+
 
 #### 2. Elicitor tab ####
 elicitorTab <- cbind(n = rdb$d_elicitor_gr5 %>% summary(),
-                     percent = rdb$d_elicitor_gr5 %>% {summary(.)/42*100} %>% round(1),
-                     percANA = control$d_elicitor_gr5 %>% {summary(.)/length(.)*100} %>% round(1),
-                     p = c(rcalc("d_elicitor_gr5","food")[4],
-                           rcalc("d_elicitor_gr5","drugs")[4],
-                           rcalc("d_elicitor_gr5","insects")[4],
-                           rcalc("d_elicitor_gr5","other")[4],
-                           rcalc("d_elicitor_gr5","unknown")[4]) %>% as.numeric(),
+                     `%` = rdb$d_elicitor_gr5 %>% {summary(.)/42*100} %>% round(1),
+                     `% severe ANA` = sdb$d_elicitor_gr5 %>% {summary(.)/length(.)*100} %>% round(1),
+                 `Perioperative [n]`= rdb$perioperative%>% split(rdb$d_elicitor_gr5) %>%
+                   lapply(.,function(x){(length(which(x=="yes"))) %>% signif(3)}),
+                 `Food allergy [n]` = rdb$q_410_foodallergy_cur_v6%>% split(rdb$d_elicitor_gr5) %>%
+                   lapply(.,function(x){(length(which(x=="yes"))) %>% signif(3)}),
                  Age = rdb$d_age %>% split(rdb$d_elicitor_gr5) %>%
                    lapply(.,function(x){mean(x) %>% signif(3)}),
-                 Male = rdb$b_sex%>% split(rdb$d_elicitor_gr5) %>%
+                 `Male [%]` = rdb$b_sex%>% split(rdb$d_elicitor_gr5) %>%
                    lapply(.,function(x){(length(which(x=="male"))/length(x)*100) %>% signif(3)}),
-                 Peroperative = rdb$perioperative%>% split(rdb$d_elicitor_gr5) %>%
-                   lapply(.,function(x){(length(which(x=="yes"))/length(x)*100) %>% signif(3)}),
-                 `Food allergy` = rdb$q_410_foodallergy_cur_v6%>% split(rdb$d_elicitor_gr5) %>%
-                   lapply(.,function(x){(length(which(x=="yes"))/length(x)*100) %>% signif(3)})
+                 p = c(rcalc("d_elicitor_gr5","food")[4],
+                       rcalc("d_elicitor_gr5","drugs")[4],
+                       rcalc("d_elicitor_gr5","insects")[4],
+                       rcalc("d_elicitor_gr5","other")[4],
+                       rcalc("d_elicitor_gr5","unknown")[4]) %>% as.numeric()
+
 )
 
 rn <- rownames(elicitorTab)
@@ -712,7 +741,30 @@ symptTab[,1] <- c("Pruritus",
                   "Death")
 
 # 8. Cofactors tab ####
-cofactorsTab <-  names(data3)[c(185:213,215:232)] %>% lapply(rcalc) %>% do.call(what = rbind)
+
+# Cofactors tab analyses which cofactors have influence on severity
+# of all anaphylaxis reactions.
+# So we took the symptoms and put them into a coparison in all cases.
+#require(dplyr)
+#require(tidyr)
+#data3 <- data3 %>%
+#  mutate(rANA2 = ifelse(is.na(rANA),"no",ifelse(rANA=="yes","yes","no")))
+#data3 %>%
+#  group_by(q_410_diab_cur_v6,rANA2) %>%
+#  summarize(n = n()) %>%
+#  spread(key = "rANA2",value = "n") %>%
+#  {.[1:2,2:3]} %>% chisq.test()
+
+# data3 %>%
+#   group_by(q_410_diab_cur_v6,rANA2) %>%
+#   summarize(n = n()) %>%
+#   spread(key = "rANA2",value = "n") %>%
+#   {.[1:2,2:3]} %>% as.matrix() %>% prop.table(margin = 2)
+
+
+cofactorsTab <-  names(data3)[c(185:213,215:232)] %>%
+                 lapply(rcalc2) %>%
+                 do.call(what = rbind)
 cofactorsTabF <- cofactorsTab[c(-1,-2,-3,-4,-5,-7,-9,-11,-13,-16,-17,-19,-20,-21,-22,-23,-24,-25,-26,-27,
                                 -29,-31,-34,-36,-38,-39,-41,-42,-44,-45,-46),]
 cofactorsTabF[,1] <- c(
