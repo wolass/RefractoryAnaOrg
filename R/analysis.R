@@ -10,7 +10,7 @@ require(magrittr)
 # Load your data in this section - it is crucial to know on what data you are actually working
 #load("analysis/data/raw_data/data3.R")
 # New database
-load("analysis/data/raw_data/data4.R")
+load("../data/raw_data/data4.R")
 data3 <- data4
 
 ##### FUNCTIONS #####
@@ -375,7 +375,7 @@ refractoryCasesBrown%in%refractoryCasesRM
 refractoryCasesRM%in%refractoryCasesBrown
 
 export$casesBrown <- data3[refractoryCasesBrown,]
-save(export, file = "analysis/data/derived_data/export.R")
+#save(export, file = "analysis/data/derived_data/export.R")
 
 
 

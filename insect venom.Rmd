@@ -81,7 +81,7 @@ Phone: +49 30 450 529 005;	  Fax: +49 30 450 529 902
 
 # Abstract
 <!-- 350 Words unstructured -->
-Insect-venom elicited anaphylaxis is a common and often severe hypersensitivity reaction. It affects older individuals than other anaphylaxis causes (p = `r t.test(data$d_age[data$d_elicitorInsect=="yes"],data$d_age[data$d_elicitorInsect=="no"])$p.val`). Using the data from the European Anaphylaxis Registry (`r v$allCases` cases in total) we identified insect-venom elicited anaphylaxis cases (n = `r v$insectElicited`) and analyzed these in comparison to anaphylaxis elicited by other elicitors (n = `r v$otherEli`).
+Insect-venom elicited anaphylaxis is a common and often severe hypersensitivity reaction. It affects older individuals than other anaphylaxis causes (p = `r t.test(data3$d_age[data3$d_elicitorInsect=="yes"],data$d_age[data$d_elicitorInsect=="no"])$p.val`). Using the data from the European Anaphylaxis Registry (`r v$allCases` cases in total) we identified insect-venom elicited anaphylaxis cases (n = `r v$insectElicited`) and analyzed these in comparison to anaphylaxis elicited by other elicitors (n = `r v$otherEli`).
 
 Patients who experienced insect-venom anaphylaxis were older (p < 0.0001), more often had mastocytisis (p < 0.0001) and cardiologic conditions (p < 0.0001) and females more often had concomitant thyroid disease, and less often sufferd from food allergy or atopic dermatitis. 
 

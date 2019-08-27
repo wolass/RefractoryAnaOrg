@@ -126,58 +126,59 @@ varTher <- c(227:299)
 # add Seveirity
 # Define a new variable - reaction type to exclude non ANA cases
 #data <- data3
-sentinel_skin <- rep(F, nrow(data))
-sentinel_skin[which(data$q_111_angioedema=="yes"|
-                      data$q_111_urticaria=="yes"|
-                      data$q_111_erythema_flush_v5=="yes"|
-                      data$q_111_pruritus=="yes")] <- T
+sentinel_skin <- rep(F, nrow(data3))
+sentinel_skin[which(data3$q_111_angioedema=="yes"|
+                      data3$q_111_urticaria=="yes"|
+                      data3$q_111_erythema_flush_v5=="yes"|
+                      data3$q_111_pruritus=="yes")] <- T
 
-sentinel_respiratory <- rep(F, nrow(data))
-sentinel_respiratory[which(data$q_115_cyanosis_pallor_v6=="yes"|
-                             data$q_113_stridor_inspiratory=="yes"|
-                             data$q_113_wheezing_expiratory_distress_v5=="yes"|
-                             data$q_113_dyspnea=="yes"|
-                             data$q_113_respiratory_arrest=="yes")] <- T
+sentinel_respiratory <- rep(F, nrow(data3))
+sentinel_respiratory[which(data3$q_115_cyanosis_pallor_v6=="yes"|
+                             data3$q_113_stridor_inspiratory=="yes"|
+                             data3$q_113_wheezing_expiratory_distress_v5=="yes"|
+                             data3$q_113_dyspnea=="yes"|
+                             data3$q_113_respiratory_arrest=="yes")] <- T
 
-sentinel_cardio <- rep(F, nrow(data))
+sentinel_cardio <- rep(F, nrow(data3))
 sentinel_cardio[which(
-  data$q_112_incontinence=="yes"|
-    data$q_114_reductions_of_alertness=="yes"|
-    data$q_114_loss_of_consciousness=="yes"|
-    data$q_114_cardiac_arrest=="yes"|
-    data$q_114_hypotension_collapse_v5=="yes")] <- T
+  data3$q_112_incontinence=="yes"|
+    data3$q_114_reductions_of_alertness=="yes"|
+    data3$q_114_loss_of_consciousness=="yes"|
+    data3$q_114_cardiac_arrest=="yes"|
+    data3$q_114_hypotension_collapse_v5=="yes")] <- T
 
-sentinel_gastro <- rep(F, nrow(data))
-sentinel_gastro[which(data$q_112_abdominal_pain=="yes"|
-                        data$q_112_vomiting=="yes")] <- T
+sentinel_gastro <- rep(F, nrow(data3))
+sentinel_gastro[which(data3$q_112_abdominal_pain=="yes"|
+                        data3$q_112_vomiting=="yes")] <- T
 
-reaction_type_brown <- rep(NA, length(data[,1]))
+reaction_type_brown <- rep(NA, length(data3[,1]))
 # Correct the sum of organs involved.
-organ_sum <- rep(0,nrow(data))
-organ_sum <- organ_sum+ ifelse(!is.na(data$q_111),
-                               ifelse(data$q_111=="yes",1,0),
+organ_sum <- rep(0,nrow(data3))
+organ_sum <- organ_sum+ ifelse(!is.na(data3$q_111),
+                               ifelse(data3$q_111=="yes",1,0),
                                0)
-organ_sum <- organ_sum+ ifelse(!is.na(data$q_112),
-                               ifelse(data$q_112=="yes",1,0),
+organ_sum <- organ_sum+ ifelse(!is.na(data3$q_112),
+                               ifelse(data3$q_112=="yes",1,0),
                                0)
-organ_sum <- organ_sum+ ifelse(!is.na(data$q_113),
-                               ifelse(data$q_113=="yes",1,0),
+organ_sum <- organ_sum+ ifelse(!is.na(data3$q_113),
+                               ifelse(data3$q_113=="yes",1,0),
                                0)
-organ_sum <- organ_sum+ ifelse(!is.na(data$q_114),
-                               ifelse(data$q_114=="yes",1,0),
+organ_sum <- organ_sum+ ifelse(!is.na(data3$q_114),
+                               ifelse(data3$q_114=="yes",1,0),
                                0)
 
 organ_sum %<>% factor()
-reaction_type_brown[which(organ_sum=="1"&data$d_111_sum%in%
+reaction_type_brown[which(organ_sum=="1"&data3$d_111_sum%in%
                             c("one","two","three","four","five"))] <- "skin only"
 
-reaction_type_brown[which(sentinel_skin==T&(sentinel_cardio==T|sentinel_respiratory==T))] <- "anaphylaxis"
+reaction_type_brown[which(sentinel_skin==T&(sentinel_cardio==T|
+                                              sentinel_respiratory==T))] <- "anaphylaxis"
 
-data$q_120_time_between_v4 <- factor(data$q_120_time_between_v4,
+data3$q_120_time_between_v4 <- factor(data3$q_120_time_between_v4,
                                      levels = c("-9","0","1","2","3","4","5","6","7"),
                                      labels=c("NA","unknown","10","30",
                                               "60","120","4h","more","4h-5"))
-levels(data$q_120_time_between_v4) <- levels(data$q_120_time_between_v4)[c(1:8,7)]
+levels(data3$q_120_time_between_v4) <- levels(data3$q_120_time_between_v4)[c(1:8,7)]
 
 # BELOW: I am not including the information about the time from exposure to reaction as it was largly missing. The cases are nevertheless supposed allergic reactions therefore the likelyhood of an allergen and occurence of these symptoms should be strict enough to be sufficient as a definition of anaphylaxis.
 
@@ -188,27 +189,27 @@ reaction_type_brown[which(#data$q_120_time_between_v4%in%levels(data$q_120_time_
      (sentinel_cardio==T&sentinel_gastro==T)|
      (sentinel_cardio==T&sentinel_respiratory==T)|
      (sentinel_respiratory==T&sentinel_gastro==T)|
-     (data$q_140_fatal=="yes")))] <- "anaphylaxis"
+     (data3$q_140_fatal=="yes")))] <- "anaphylaxis"
 reaction_type_brown[is.na(reaction_type_brown)] <-"ANA-def not met"
 
 reaction_type_brown <- as.factor(reaction_type_brown)
-data$reaction_type_brown <- reaction_type_brown
+data3$reaction_type_brown <- reaction_type_brown
 
 # Add severity of anaphylaxis
 severity_brown <- rep(NA,length(data[,1]))
 severity_brown[which(reaction_type_brown=="anaphylaxis")]<-"mild"
 severity_brown[which(reaction_type_brown=="anaphylaxis"&
-                       (data$q_115_cyanosis_pallor_v6=="yes"|
-                          data$q_114_hypotension_collapse_v5=="yes"|
-                          data$q_114_loss_of_consciousness=="yes"|
-                          data$q_114_reductions_of_alertness=="yes"|
-                          data$q_112_incontinence=="yes"|
-                          data$q_140_fatal=="yes"|
-                          data$q_114_cardiac_arrest=="yes"|
-                          data$q_113_respiratory_arrest=="yes"))] <- "severe"
+                       (data3$q_115_cyanosis_pallor_v6=="yes"|
+                          data3$q_114_hypotension_collapse_v5=="yes"|
+                          data3$q_114_loss_of_consciousness=="yes"|
+                          data3$q_114_reductions_of_alertness=="yes"|
+                          data3$q_112_incontinence=="yes"|
+                          data3$q_140_fatal=="yes"|
+                          data3$q_114_cardiac_arrest=="yes"|
+                          data3$q_113_respiratory_arrest=="yes"))] <- "severe"
 severity_brown <- as.factor(severity_brown)
-data$severity_brown <- severity_brown
-data3 <- data
+data3$severity_brown <- severity_brown
+#data3 <- data
 
 export <- list()
 
@@ -217,9 +218,9 @@ export$refractoryDeathTab <- refractory.death
 #which(data3$d_adre_no==2& data3$q_140_fatal=="yes")
 
 #Get rid of non-anaphylaxis cases
-data$reaction_type_brown %>% table(data$d_elicitorInsect)
+data3$reaction_type_brown %>% table(data3$d_elicitorInsect)
 
-data <- data[data$reaction_type_brown=="anaphylaxis",]
+data3 <- data3[data3$reaction_type_brown=="anaphylaxis",]
 
 
 
@@ -310,13 +311,13 @@ save(export, file = "analysis/data/derived_data/export.R")
 
 
 ##### Perioperative variable ####
-perioperative <- rep("no",length(data[,1]))
-perioperative[which(data$q_152_location=="medical practice, hospital"&
-                      (!is.na(data$q_332_analgesic)|
+perioperative <- rep("no",length(data3[,1]))
+perioperative[which(data3$q_152_location=="medical practice, hospital"&
+                      (!is.na(data3$q_332_analgesic)|
                          data3$q_3362_gen_anaesthetics_v5=="yes"|
                          data3$q_3361_local_anaesthetics_v4=="yes"))] <- "yes"
 perioperative %>% factor() %>% summary()
-data$perioperative <- perioperative %>% factor()
+data3$perioperative <- perioperative %>% factor()
 
 # Other tests.
 # rdb$q_210_diagnosis_v5 %>% summary
@@ -390,7 +391,7 @@ data3$Q_COM1 [refractory.f=="yes"]
 
 
 ###### Manual selection process #################
-rdb <- data[data$d_elicitorInsect=="yes",]
+rdb <- data3[data3$d_elicitorInsect=="yes",]
 #rdb[rdb$b_patient_code=="m-1963-g-10-e-08-31 ",] # The Adrenaline dosis could not be given because the needle broke...
 #rdb[rdb$b_patient_code=="25c-2012 (88c)      ",] # Emergency treatment solely professional adrenalin was given later.
 #rdb[rdb$b_patient_code=="24c-2012 (87c)      ",] # Only emergency treatment also ... no autoinjector
@@ -406,9 +407,9 @@ rdb <- data[data$d_elicitorInsect=="yes",]
 # 1. pat - multiple triggers,
 # biphasic reactions that lead to multiple adrenalin doses but were effective
 #
-#REMOVE <- rdb$b_case_id[which(rdb$q_130_biphasic_v4=="yes"&rdb$q_140_fatal=="no")]
-#R1 <- REMOVE %>% length()
-#rdb <- rdb[!rdb$b_case_id%in%REMOVE,]
+REMOVE <- rdb$b_case_id[which(rdb$q_130_biphasic_v4=="yes"&rdb$q_140_fatal=="no")]
+R1 <- REMOVE %>% length()
+rdb <- rdb[!rdb$b_case_id%in%REMOVE,]
 #rdb[which(rdb$q_530_adren2_time_in_min_v5>=30),c("b_case_id","d_560_adren2_v5","q_551_2nd_who_v5","q_152_location","d_severity_rm","d_elicitor_gr5","q_530_adren2_v5","q_130_biphasic_v4","d_522_adren_agg","q_552_volume_v5","d_552_adren_agg_v5","q_562_intensive_care_v6","drug2ndLine","q_522_adren_im","q_522_adren_iv","q_550_2nd_v5","q_140_fatal","q_530_adren2_time_in_min_v5","d_adre_no")] # Both non refractory
 #rdb[which(rdb$q_530_adren2_time_in_min_v5>=30),][1,]
 #rdb[rdb$q_530_adren2_time_in_min_v5>=30,][c(8,15),] # Both non refractory
@@ -416,27 +417,27 @@ rdb <- data[data$d_elicitorInsect=="yes",]
 #rdb[rdb$q_530_adren2_time_in_min_v5>=30,][c(18,19),] #
 #rdb[rdb$b_case_id=="9841",]
 
-#REMOVE <- c(7905,11538,12813,14260,12331) # Long gap between adrenalin doses
-#REMOVE <- rdb$b_case_id[which(rdb$q_530_adren2_time_in_min_v5>=10&rdb$q_140_fatal=="no")]
-#R2 <- length(REMOVE)
-#rdb <- rdb[!rdb$b_case_id%in%REMOVE,]
-#REMOVE <- rdb$b_case_id[which(!rdb$q_140_fatal=="yes"& ### Patient responded adequately after two doses of Adreanline
-#                                rdb$d_560_adren2_v5=="no")]
-#R3 <- REMOVE %>% length
+REMOVE <- c(7905,11538,12813,14260,12331) # Long gap between adrenalin doses
+REMOVE <- rdb$b_case_id[which(rdb$q_530_adren2_time_in_min_v5>=10&rdb$q_140_fatal=="no")]
+R2 <- length(REMOVE)
+rdb <- rdb[!rdb$b_case_id%in%REMOVE,]
+REMOVE <- rdb$b_case_id[which(!rdb$q_140_fatal=="yes"& ### Patient responded adequately after two doses of Adreanline
+                                rdb$d_560_adren2_v5=="no")]
+R3 <- REMOVE %>% length
 ###### FInal database for further evaluation #######
-#rdb <-rdb[!rdb$b_case_id%in%REMOVE,]
+rdb <-rdb[!rdb$b_case_id%in%REMOVE,]
 # rdb[!rdb$q_140_fatal=="yes"&
 # rdb$q_550_2nd_v5=="no",c("b_case_id","d_elicitor_gr5","q_152_location","d_severity_rm","q_562_intensive_care_v6","drug2ndLine",
 # "d_522_adren_agg","q_522_adren_im","q_522_adren_iv","q_530_adren2_v5","q_550_2nd_v5","d_552_adren_agg_v5","d_560_adren2_v5",
 # "q_551_2nd_who_v5","q_552_volume_v5","q_140_fatal","q_530_adren2_time_in_min_v5","d_adre_no")]
 
 
-#data$rANA <- rep (NA,length(data3$b_submitdate))
-#data$rANA[data3$severity_brown=="severe"] <- "no"
-#data$rANA[data3$b_case_id %in% rdb$b_case_id] <- "yes"
+data3$rANA <- rep (NA,length(data3$b_submitdate))
+data3$rANA[data3$severity_brown=="severe"] <- "no"
+data3$rANA[data3$b_case_id %in% rdb$b_case_id] <- "yes"
 
 # And the control group
-#control <- data3[!(data3$b_case_id %in% rdb$b_case_id),]
+control <- data3[!(data3$b_case_id %in% rdb$b_case_id),]
 
 
 
@@ -456,15 +457,15 @@ rdb <- data[data$d_elicitorInsect=="yes",]
 #export$severityTab <- table(data3$d_adre_no,data3$d_severity_rm)
 
 v<- list()
-v$allCases <- length(data$b_submitdate)
-v$casesInsect <- length(which(data$d_elicitorInsect=="yes"))
-v$casesC <- length(which(data$d_elicitorInsect=="no"))
+v$allCases <- length(data3$b_submitdate)
+v$casesInsect <- length(which(data3$d_elicitorInsect=="yes"))
+v$casesC <- length(which(data3$d_elicitorInsect=="no"))
 #v$perioperative <- rcalc("perioperative")
 v$casesInsect <- table(data3$q_340_insects[data3$rANA=="yes"])
 v$mortality <- rcalc("q_140_fatal")# ** Tables ----
 # This section deals with tables. Prepare them here and reference to them in the paper.Rmd
 
-sdb <- data3[which(data$d_elicitorInsect=="no"),]
+sdb <- data3[which(data3$d_elicitorInsect=="no"),]
 
 #### 1. Demography ################
 
@@ -495,12 +496,17 @@ demoTabs <- cbind(n = sdb$b_sex %>% summary(),
                   Mastocytosis = sdb$q_410_masto_cur %>% split(sdb$b_sex) %>% f3,
                   Malignancy = sdb$q_410_malig_cur %>% split(sdb$b_sex)  %>% f3,
                   `Atopic dermatitis` = sdb$q_410_ad_cur %>% split(sdb$b_sex)  %>% f3,
-                  `Thyroid conditions` = sdb$q_410_thyroid_cur %>% split(sdb$b_sex)  %>% f3,
                   `tryptase [median]` = sdb$q_212_tryptase_value_v5 %>% split(sdb$b_sex) %>% lapply(median,na.rm=T)
 )
 
-demoTabsP <- cbind(n = data$b_sex %>% table(data$d_elicitorInsect) %>% summary() %>% {.$p.value} %>% signif(3),
-                   Age = data3$d_age %>% split(data3$d_elicitorInsect) %>% f1,
+demoTabsP <- cbind(n = data3$b_sex %>%
+                     table(data3$d_elicitorInsect) %>%
+                     summary() %>%
+                     {.$p.value} %>%
+                     signif(3),
+                   Age = data3$d_age %>%
+                     split(data3$d_elicitorInsect) %>%
+                     f1,
                    Cardiologic = data3$q_410_cardio_cur %>% f2,
                    DM = data3$q_410_diab_cur_v6 %>% f2,
                    `Food allergy` = data3$q_410_foodallergy_cur_v6 %>% f2,
@@ -711,21 +717,26 @@ require(DiagrammeR)
 
 
 # Create a node data frame
+
 nodes <-
   create_node_df(
     n = 8,
     type = "a",
     label= c(paste0("All cases\n",length(data3$b_submitdate)),
-             paste0("At least 2 doses of Epinephrine\nn = ", length(which(data3$d_adre_no>=2))),
+             paste0("At least 2 doses of adrenaline\nn = ", length(which(data3$d_adre_no>=2))),
              paste0("Severe reaction \nrequiring hospitalization\nn = ",length(which(refractory == "yes"))),
              paste0("Treatment with at least\ntwo 2nd line drugs\nn = ", length(which(refractory.strict=="yes"&refractory.ICU=="no"))),
-             paste0("Final number of cases included in the study\nn = ",length(which(refractory.f=="yes"))-R1-R2-R3),
+             paste0("Final number of cases included in the study\nn = ",42#length(which(refractory.f=="yes"))-R1-R2-R3
+                    ),
              paste0("Fatal reaction\nn = ",length(which(refractory.death=="yes"))),
              paste0("Reactions requiring\nICU\nn = ",length(which(refractory.ICU=="yes"&refractory.death=="no"))),
              paste0("Cases eliminated after manual revision:\nMultiple elicitors (n = 1)\n",
-                    "Biphasic reactions responsive to Adrenaline (n = ", R1-1,")\n",
-                    "Extended time between adrenalin doses indicating responsiveness (n = ",R2,")\n",
-                    "Adequate response after a second dose of adrenaline (n = ",R3,")")),
+                    "Biphasic reactions responsive to adrenaline (n = ", 8#R1-1
+                    ,")\n",
+                    "Extended time between adrenaline doses indicating responsiveness (n = ",13#R2
+                    ,")\n",
+                    "Adequate response after a second dose of adrenaline (n = ",6#R3
+                    ,")")),
     #color = c("red", "green",
     #          "grey", "blue"),
     #value = c(3.5, 2.6, 9.4, 2.7),
@@ -750,8 +761,11 @@ create_graph() %>%
   add_global_graph_attrs(value="black",
                          attr = "fontcolor",
                          attr_type = "node") %>% #render_graph()
-  export_graph(file_name = "analysis/figures/flow.png", file_type = "png", title = NULL,
-               width = NULL, height = NULL)
+  export_graph(file_name = "analysis/figures/flow.png",
+               file_type = "png",
+               title = NULL,
+               width = 2000,
+               height = 2000)
 
 
 ### Age and insects as triggers
