@@ -744,10 +744,13 @@ nodes <-
     width = c(1.8,3.5,1.8,1.8,3.5,1.8,1.8,5.8),
     x = c(1,1,1,3,1,-1, 1, 1),
     y = c(0,-1,-2,-3,-5,-3,-3,-4),
-    height = c(rep(0.6,7),1))
+    height = c(rep(0.6,7),1),
+    color = "black",
+    fillcolor = "lightgrey")
 
 edges <- create_edge_df(from = c(1,2,3,4,2,6,3,7,8),
-                        to = c(2,3,4,8,6,8,7,8,5))
+                        to = c(2,3,4,8,6,8,7,8,5),
+                        color = "black")
 # Add the node data frame to the
 # graph object to create a graph
 # with nodes
@@ -759,8 +762,11 @@ create_graph() %>%
     value = "ortho",
     attr_type = "graph") %>%
   add_global_graph_attrs(value="black",
+                         attr = "color",
+                         attr_type = "graph") %>%
+  add_global_graph_attrs(value="black",
                          attr = "fontcolor",
-                         attr_type = "node") %>% #render_graph()
+                         attr_type = "node") %>%#render_graph()
   export_graph(file_name = "analysis/figures/flow.png",
                file_type = "png",
                title = NULL,

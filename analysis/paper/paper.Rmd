@@ -149,7 +149,7 @@ locTab <- data3$q_152_location %>% table(data3$rANA)
 Refractory anaphylaxis was most commonly elicited by drugs (significantly more often than in severe, non-refractory cases), followed by food and insects (table \@ref(tab:elicitorTab)). The most common drugs eliciting anaphylaxis refractory to adrenaline were antibiotics (`r elicitExact[1,3]`%) and radiocontrast media (RCM, `r elicitExact[2,3]`%). Patients with refractory anaphylaxis more frequently experienced the reaction while undergoing a medical procedure (`r (locTab[3,2]/sum(locTab[,2])*100) %>% {signif(.,3)}`% vs. `r (locTab[3,1]/sum(locTab[,1])*100) %>% {signif(.,3)}` in severe, non-refractory cases, p < 0.0001) 
 
 
-`r elicitorTab[elicitorTab$Elicitor =="food","Food allergy [n]"] / elicitorTab[elicitorTab$Elicitor =="food","n"]*100 %>% {round(.,1)}`% of food elicited refractory cases had a previously confirmed diagnosis of food allergy. Insect-venom and food allergens most frequently elicited severe cases of anaphylaxis.
+`r round(elicitorTab[elicitorTab$Elicitor =="food","Food allergy [n]"] / elicitorTab[elicitorTab$Elicitor =="food","n"]*100, 0) `% of food elicited refractory cases had a previously confirmed diagnosis of food allergy. Insect-venom and food allergens most frequently elicited severe cases of anaphylaxis.
 Refractory anaphylaxis cases were more often elicited by bees than severe, non-refractory cases, p = `r table(data3$q_340_insects,data3$rANA) %>%  {rbind(addmargins(.[3:8,],1) %>% tail(1),.[2,])} %>% as.matrix() %>% fisher.test() %>% {.$p.value} %>% round(4)` (table \@ref(tab:elicitExact)). 
 
 ## Refractory anaphylaxis is life-threatening
@@ -220,7 +220,7 @@ Yellow-jacket-stings elicited only a few refractory cases. Therefore, the ratio 
 Although we have previously identified higher age and male sex to be associated with severe anaphylaxis [@Worm2018], these factors seem to be less critical in refractory anaphylaxis cases. By contrast, we previously associated concomitant asthma with less severe anaphylaxis in our registry data [@Worm2018]. However, the present analysis, as well as other previous data [@Mullins2003], suggest concomitant asthma as a risk factor for a severe episode. Probably the control of the asthmatic condition is essential in this context and should be therefore evaluated in patients at risk. Moreover, it might be possible that during a refractory episode the bronchospasm is additionally triggered via mediators derived from basophils and eosinophils or the vegetative nerve system what makes it refractory to adrenaline and results in a prolonged anaphylactic episode. Accordingly, we observed more respiratory distress symptoms in the refractory anaphylaxis cases.
 
 <!-- The influence of tryptase -->
-Baseline serum tryptase (BST) levels were increased in patients with refractory anaphylaxis, although only in 7 patients they were over the threshold level of 11.5 ng/mL - what is commonly recognized as elevated [@klion2003]. BST may reflect pro-β tryptase due to increased body mast cell content [@CAUGHEY2006] or result from alpha-tryptasemia due to multiple copies of *TPSAB1* gene [@Lyons2018]. Irrespective of the mechanism - increased BST has been shown to correlate with the severity of anaphylaxis [@Aniceto2019]. 
+Baseline serum tryptase (BST) levels were increased in patients with refractory anaphylaxis, although only in 7 patients they exceeded the threshold level of 11.5 ng/mL - what is commonly recognized as elevated [@klion2003]. BST may reflect pro-β tryptase due to increased body mast cell content [@CAUGHEY2006] or result from alpha-tryptasemia due to multiple copies of *TPSAB1* gene [@Lyons2018]. Irrespective of the mechanism - increased BST has been shown to correlate with the severity of anaphylaxis [@Aniceto2019]. 
 
 <!-- Is it possible that the cancer drugs made them more susceptible to refractory anaphylaxis? -->
 ```{r}
@@ -283,122 +283,19 @@ We thank all patients, parents, and their children for their support in providin
 the occurrence of anaphylaxis for this study. We thank the study personnel for patients
 counseling and data entry and we thank the members of The European Anaphylaxis Registry
 in detail:
-J. Grünhagen (Berlin, Germany),
-K. Beyer (Berlin, Germany),
-A. Möser (Jena, Germany),
-T. Fuchs (Göttingen, Germany),
-F. Ruëff (Munich, Germany),
-B. Wedi (Hanover, Germany),
-F. Friedrichs (Aachen, Germany),
-H. Dickel (Bochum, Germany),
-H. Merk (Aachen, Germany),
-U. Hillen (Essen, Germany),
-A. Bauer (Dresden, Germany),
-N. Wagner (Erlangen, Germany),
-E. Rietschel (Cologne, Germany),
-R. Treudler, S. Aurich (Leipzig, Germany),
-L. Klimek, O. Pfaar (Wiesbaden, Germany),
-N. Reider (Innsbruck, Germany),
-W. Aberer (Graz, Austria),
-A. Köhli (Zurich, Switzerland),
-F. Riffelmann (Schmallenberg, Germany),
-B. Kreft (Halle, Germany),
-K. Nemat (Dresden, Germany),
-T. Kinaciyan (Vienna, Austria),
-R. Brehler (Münster, Germany),
-J. Witte (Hamburg, Germany),
-N. Hunzelmann und I. Huseynow (Cologne, Germany),
-T. Bieber (Bonn, Germany),
-U. Rabe (Treuenbritzen, Germany),
-P. Schmid-Grendelmeier (Zurich, Switzerland),
-W. Brosi (Würzburg, Germany),
-S. Nestoris (Lippe-Lemgo, Germany),
-T. Hawranek (Salzburg, Austria),
-R. Bruns (Greifswald, Germany),
-S. Lehmann (Aachen, Germany),
-L. Lange (Bonn, Germany),
-G. Hansen (Hanover, Germany),
-C. Pföhler (Homburg, Germany),
-E. Varga (Graz, Austria),
-Z. Szepfalusi (Vienna, Austria),
-P. Eng (Aarau, Switzerland),
-P. Eng (Lucerne, Switzerland),
-T. Reese (Rheine, Germany),
-M. Polz (Rüsselsheim, Germany),
-S. Schweitzer-Krantz (Düsseldorf, Germany),
-H. Rebmann (Tübingen, Germany),
-G. Stichtenoth (Lübeck, Germany),
-S. Theis (Schwedt, Germany),
-I. Yildiz (Neumünster, Germany),
-M. Gerstlauer (Augsburg, Germany),
-A. Nordwig (Dresden, Germany),
-R. Schlags (Wangen im Allgäu, Germany),
-I. Neustädter (Fürth, Germany),
-C. Stadlin (Zurich, Switzerland),
-M. Bücheler (Bonn, Germany),
-S. Volkmuth (Velbert, Germany),
-J. Fischer (Tübingen, Germany),
-A. Henschel (Berlin, Germany),
-S. Plank-Habibi (Alzenau, Germany),
-B. Schilling (Passau, Germany),
-A. Kleinheinz (Buxtehude, Germany),
-K. Schäkel (Heidelberg, Germany),
-N. Papadopoulos (Athen, Greece),
-M. Kowalski (Lodz, Poland),
-M. Fernandez-Rivas (Madrid, Spain),
-K. Solarewicz-Madajek (Wroclaw, Poland),
-C. Körner-Rettberg (Bochum, Germany),
-T. Mustakov (Sofia, Bulgaria),
-K. Hartmann (Lübeck, Germany),
-C. Kemen (Hamburg, Germany),
-U. Miehe (Leipzig, Germany),
-C. Ebner (Vienna, Austria),
-S. Haak (Oldenburg, Deutschland),
-V. Cardona (Barcelona, Spain),
-S. Hämmerling (Heidelberg, Germany),
-E. Arroabarren (Pamplona, Spain),
-M. Bilo (Ancona, Italy),
-N. Cabañes Higuero (Toledo, Spain),
-A. Vega Castro (Guadalajara, Spain),
-I. Poziomkowska-Gęsicka (Szczecin, Poland),
-S. Büsing (Osnabrück, Germany),
-U. Klettke (Berlin, Germany),
-C. Virchow (Rostock, Germany),
-G. Christoff (Sofia, Bulgaria),
-U. Jappe (Borstel, Germany),
-K. Breuer (Hamburg, Germany),
-S. Müller and T. Jakob (Freiburg, Germany),
-H. Straube (Darmstadt, Germany),
-C. Vogelberg (Dresden, Germany),
-F. Knöpfel (Norderney, Germany),
-J. Hourihane (Cork, Ireland),
-B. Rogala (Silesia, Poland),
-A. Montoro (Madrid, Spain),
-A. Brandes (Frankfurt/Oder, Germany),
-A. Muraro (Padua, Italy),
-T. Buck und J. Büsselberg (Hanover-Misburg, Germany),
-N. Zimmermann (Potsdam, Germany),
-D. Hernandez (Valencia, Spain),
-P. Minale (Genua, Italy),
-J. Niederwimmer und B. Zahel (Linz, Austria),
-A. Fiocchi (Rome, Italy),
-A. Reissig (Gera, Germany),
-F. Horak (Vienna, Austria),
-N. Klossowiski (Düsseldorf, Germany),
-F. Eitelberger (Wels, Austria),
-H. Ott (Hanover, Germany),
-R. Asero (Milan, Italy),
-S. Pistauer (Sylt/Westerland, Germany),
-M. Geißler (Ribnitz-Damgarten, Germany),
-L. Ensina (Sao Paulo, Brazil),
-A. Plaza Martin (Barcelona, Spain),
-J. Meister (Aue, Germany),
-S. Hompes (Hamburg, Germany),
-S. Stieglitz (Wuppertal, Germany).
+
+```{r, results="asis"}
+dfca <-readxl::read_excel("../data/derived_data/Co-authors 2019-08-28.xlsx")
+names(dfca) <- "names"
+temp <- dfca %>% 
+  dplyr::as_tibble() %>% 
+  dplyr::filter(!is.na(names)) %>% 
+  dplyr::pull(names) %>% 
+  paste(collapse = ", ")  %>% 
+  cat
+```
 
 ##### pagebreak
-
-
 
 # References 
 <!-- The following line ensures the references appear here for the MS Word or HTML output files, rather than right at the end of the document (this will not work for PDF files):  -->
@@ -419,7 +316,7 @@ knitr::include_graphics("../figures/flow.png")
 
 ```{r theory, fig.cap="Visual representation of the three forces determining the severity of anaphylaxis. The natural ability of the body to compensate for the anaphylaxis symptoms and therapeutic measures acting to restore homeostasis. Elicitors and cofactors influence the severity of a given episode synergistically."}
 
-knitr::include_graphics("../figures/diag22.png")
+knitr::include_graphics("../figures/diag.png")
 ```
 
 
